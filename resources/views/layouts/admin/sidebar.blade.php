@@ -43,6 +43,45 @@
               </p>
             </a>
           </li>
+          @if(Auth::guard("admin")->user()->type=="Vendor")
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                 Setting
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route("vupdate","password")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Password</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("vupdate","personal")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Info</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("vupdate","business")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Update Business Info</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("dlogout")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Logout</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          @else
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
@@ -62,6 +101,12 @@
                 <a href="{{route("adupdate")}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Update Details</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("dlogout")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Logout</p>
                 </a>
               </li>
             </ul>
@@ -599,6 +644,7 @@
               <p>Informational</p>
             </a>
           </li>
+        @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("city");
-            $table->string("phone")->nullable();
+            $table->string("phone")->unique();
             $table->string("email")->unique();
-            $table->tinyInteger("status");
+            $table->string("address");
             $table->timestamps();
         });
     }

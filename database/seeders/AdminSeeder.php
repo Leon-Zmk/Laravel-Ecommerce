@@ -19,17 +19,27 @@ class AdminSeeder extends Seeder
         $pass=Hash::make("password");
         $superADM=[
             'id'=>1,
-            'name'=>'super admin',
-            'type'=>'super admin',
+            'name'=>'Zaw Min Khant',
+            'type'=>'Admin',
             'vendor_id'=>'0',
-            'mobile'=>'0997129481',
+            'mobile'=>'0924141901',
             'email'=>'admin@admin.com',
+            'password'=>"$pass",
+            'status'=>'1'
+        ];
+        $Vendor=[
+            'id'=>2,
+            'name'=>'Zaw Min Khant',
+            'type'=>'Vendor',
+            'vendor_id'=>'1',
+            'mobile'=>'0942129014',
+            'email'=>'vendor@admin.com',
             'password'=>"$pass",
             'status'=>'1'
         ];
 
         Admin::insert($superADM);
-
+        Admin::insert($Vendor);
 
     }
 }

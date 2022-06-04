@@ -32,10 +32,16 @@ Route::prefix("/admin")->group(function(){
 
         Route::get("/update-admin-details",[App\Http\Controllers\AdminControllers\AdminController::class,"updateDetails"])->name("adupdate");
         Route::post("/update-admin-details",[App\Http\Controllers\AdminControllers\AdminController::class,"updateDetails"])->name("adupdate");
+
+        Route::get("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
+        Route::post("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
+
     });
    
     Route::get("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");
     Route::post("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");
+    Route::get("/logout",[App\Http\Controllers\AdminControllers\AdminController::class,"logout"])->name("dlogout");
+
 
 
  
