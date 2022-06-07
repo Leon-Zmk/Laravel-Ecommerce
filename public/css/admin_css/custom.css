@@ -11,5 +11,5 @@
 }
 
 .toggleStatus {
-   text-decoration: none;
+   color: inherit !important;
 }
