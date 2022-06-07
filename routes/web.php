@@ -36,6 +36,10 @@ Route::prefix("/admin")->group(function(){
         Route::get("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
         Route::post("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
 
+        Route::get("/management/{type?}",[App\Http\Controllers\AdminControllers\AdminController::class,"admins"])->name("management");
+        Route::post("/management/status",[App\Http\Controllers\AdminControllers\AdminController::class,"status"])->name("manageStatus");
+        Route::get("/management/{id?}/detail",[App\Http\Controllers\AdminControllers\AdminController::class,"detail"])->name("managementDetail");
+
     });
    
     Route::get("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");

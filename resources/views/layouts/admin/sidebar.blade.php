@@ -113,6 +113,41 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Account Management 
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route("management","Admins")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admin </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("management","Subadmin")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Subadmin </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("management","Vendor")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vendor </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("management")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Charts

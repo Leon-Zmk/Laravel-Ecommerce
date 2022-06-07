@@ -24,9 +24,43 @@ $(document).ready(function(){
             }
         })
     })
+
+    $(document).on("click",".toggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let admin_id=$(this).attr("admin_id");
+      
+        $.ajax({
+            type:"Post",
+            url:`/admin/management/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "admin_id":admin_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#admin-id-'+admin_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i>');
+               }else{
+                $('#admin-id-'+admin_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+  
 })
 
-let user_img=document.getElementById("user_img");
+
+
+if(document.getElementById("user-img")){
+    let user_img=document.getElementById("user_img");
 let image=document.getElementById("image");
 
 user_img.addEventListener('click',function(){
@@ -41,3 +75,4 @@ image.addEventListener("change",function(){
     })
     reader.readAsDataURL(file);
 })
+}

@@ -45,14 +45,7 @@
 
                     <div class="card-body">
 
-                      <div class="text-center">
-                        
-                          <img src="{{asset("storage/user_profile/".auth()->guard('admin')->user()->image)}}" class="rounded rounded-circle" id="user_img" style="width:150px;height:150px" alt="">
-                          
-                          <div class="form-group">
-                              <input type="file" hidden id="image" name="image">
-                          </div>
-                        </div>
+                      
                   
                     @if(session("error_message"))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -128,24 +121,34 @@
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-  
+                  <br>
+                  <br>
+                  
+                  @if(session("success_message"))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>  {{session("success_message")}} </strong>
+                  
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                 @endif
+                  
                  
-                 
-                  <form method="POST" action="{{route("vupdate","personal")}}">
+                  <form method="POST" action="{{route("vupdate","personal")}}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                     
-                  
+                      <div class="text-center">
+                        
+                        <img src="{{asset("storage/user_profile/".auth()->guard('admin')->user()->image)}}" class="rounded rounded-circle" id="user_img" style="width:150px;height:150px" alt="">
+                        
+                        <div class="form-group">
+                            <input type="file" hidden id="image" name="image">
+                        </div>
+                      </div>
       
-                     @if(session("success_message"))
-                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                       <strong>  {{session("success_message")}} </strong>
-                     
-                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                       </button>
-                     </div>
-                    @endif
+                    
                     
                       <div class="form-group">
                         <label for="name">Name</label>
@@ -161,7 +164,12 @@
                       </div>
                       <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" name="city" value="{{Auth::guard("admin")->user()->personal->city}}"  class="form-control" id="city" placeholder="{{App\Models\Vendor::find(auth()->guard('admin')->user()->vendor_id)->city}}" >
+                        <select name="city" id="city" class=" custom-select">
+                          <option value="">Select Your City</option>
+                          @foreach (App\Models\Statordivision::all() as $stsord)
+                              <option value="{{$stsord->stat_or_division}}" @if ($stsord->stat_or_division == Auth::guard("admin")->user()->personal->city) selected  @endif>{{$stsord->stat_or_division}}</option>
+                          @endforeach
+                        </select>
                         @error("city")
 
                         <span class="text-danger">

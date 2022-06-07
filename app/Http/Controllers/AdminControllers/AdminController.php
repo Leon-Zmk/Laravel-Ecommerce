@@ -150,13 +150,37 @@ class AdminController extends Controller
                     "city"=>"required",
                     "phone"=>"required|unique:vendors,phone,$user->id|max:15",
                     "address"=>"required",
+                    "image"=>"nullable|file|min:0|max:5000",
                 ]);
 
+
+
                 $user=Vendor::find(Auth::guard("admin")->user()->vendor_id);
+                $admin=Admin::find(Auth::guard("admin")->user()->id);
+                $admin->name=$request->name;
                 $user->name=$request->name;
                 $user->city=$request->city;
                 $user->phone=$request->phone;
+                $admin->mobile=$request->phone;
                 $user->address=$request->address;
+
+                if($request->hasFile("image")){
+
+                    $request->validate([
+                        "image"=>"file|min:0|max:5000",
+                    ]);
+    
+                    $img=$request->file("image");
+    
+                    $newName=uniqid()."profile_photo.".$img->extension();
+    
+                    Image::make($img)->save("storage/user_profile/$newName");
+    
+                    $admin->image=$newName;
+    
+                }
+
+                $admin->update();
                 $user->update();
 
                 return redirect()->back()->with("success_message","Info Updated Successfully");
@@ -200,12 +224,55 @@ class AdminController extends Controller
         return view("vendors.update_vendor_detail",compact("detail_type"));
     }
 
+    /////////////// end update section
+
+
+    //////start management section
 
 
 
+    public function admins($type=null){
 
+       if(!empty($type)){
+        $usersdetail=Admin::where("type",$type)->get();
+       }
+       else{
+        
+            $type="All";
+            $usersdetail=Admin::all();
+       }
+        return view("admin.userManagement.admins",compact("type","usersdetail"));
+    }
 
-    ///////////////
+    public function detail($id=null){
+
+        if(!empty($id)){
+            $userdetail=Admin::with("personal","business")->where("id",$id)->first();
+            return view("admin.userManagement.detail",compact("userdetail"));
+        }else{
+            return "No User";
+        }
+
+    }
+
+    public function status(Request $request){
+
+            $user=Admin::find($request->admin_id);
+            if($request->status=="active"){
+                $user->status=0;
+            }
+            else{
+                $user->status=1;
+            }
+
+            $user->update();
+
+            return response($user->status);
+        
+
+    }
+
+    /////end management section
 
     public function logout(){
          Auth::guard("admin")->logout();

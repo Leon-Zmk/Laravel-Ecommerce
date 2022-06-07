@@ -8,13 +8,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Admin Infos</h1>
+            <h1>Admin Detail</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route("dashboard")}}">Dashboard</a></li>
               <li class="breadcrumb-item active">Setting</li>
-              <li class="breadcrumb-item active">Update admin Info</li>
+              <li class="breadcrumb-item active">Update admin Detail</li>
             </ol>
           </div>
         </div>
@@ -123,7 +123,11 @@
 
 @push('script')
 
-    <script src={{asset("plugins/jquery/jquery.min.js")}}></script>
-    <script src={{asset("plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
-    <script src="{{asset("js/admin_js/custom.js")}}"></script>
+<script src={{asset("plugins/jquery/jquery.min.js")}}></script>
+<script src={{asset("plugins/bootstrap/js/bootstrap.bundle.min.js")}}></script>
+<!-- overlayScrollbars -->
+<script src={{asset("plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js")}}></script>
+<!-- AdminLTE App -->
+<script src={{asset("js/admin_js/adminlte.js")}}></script>
+<script src="{{asset("js/admin_js/custom.js")}}"></script>
 @endpush
