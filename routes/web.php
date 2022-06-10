@@ -40,6 +40,17 @@ Route::prefix("/admin")->group(function(){
         Route::post("/management/status",[App\Http\Controllers\AdminControllers\AdminController::class,"status"])->name("manageStatus");
         Route::get("/management/{id?}/detail",[App\Http\Controllers\AdminControllers\AdminController::class,"detail"])->name("managementDetail");
 
+
+        //catalogue 
+
+        Route::get("/management/catalogue/sections",[App\Http\Controllers\AdminControllers\SectionController::class,"sections"])->name("sectionsManagement");
+        Route::post("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
+        Route::get("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
+        Route::post("management/catalogue/delete/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"delete"])->name("sectionDelete");
+
+        
+        //catalogue
+
     });
    
     Route::get("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");

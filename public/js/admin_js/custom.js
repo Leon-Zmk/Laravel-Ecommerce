@@ -54,6 +54,10 @@ $(document).ready(function(){
         })
       
     })
+
+    $(document).on("click","sectiondelete",function(){
+            
+    })
   
 })
 
