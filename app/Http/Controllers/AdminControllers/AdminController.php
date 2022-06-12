@@ -93,7 +93,7 @@ class AdminController extends Controller
             if($request->hasFile("image")){
 
                 $request->validate([
-                    "image"=>"file|min:0|max:5000",
+                    "image"=>"file|mimes:jpg,png|min:0|max:5000",
                 ]);
 
                 $img=$request->file("image");
@@ -150,7 +150,7 @@ class AdminController extends Controller
                     "city"=>"required",
                     "phone"=>"required|unique:vendors,phone,$user->id|max:15",
                     "address"=>"required",
-                    "image"=>"nullable|file|min:0|max:5000",
+                    "image"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
                 ]);
 
 
@@ -167,7 +167,7 @@ class AdminController extends Controller
                 if($request->hasFile("image")){
 
                     $request->validate([
-                        "image"=>"file|min:0|max:5000",
+                        "image"=>"file|mimes:jpg,png|min:0|max:5000",
                     ]);
     
                     $img=$request->file("image");
@@ -191,9 +191,9 @@ class AdminController extends Controller
                     "shop_address"=>"required",
                     "shop_website"=>"nullable",
                     "shop_mobile"=>"required",
-                    "shop_profile"=>"nullable|file|min:0|max:5000",
-                    "shop_background_profile"=>"nullable|file|min:0|max:5000",
-                    "shop_image_verification"=>"nullable|file|min:0|max:5000",
+                    "shop_profile"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
+                    "shop_background_profile"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
+                    "shop_image_verification"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
                 ]);
 
                 $shop=Vshop::find(Auth::guard("admin")->user()->vendor_id);

@@ -55,11 +55,26 @@ $(document).ready(function(){
       
     })
 
-    $(document).on("click","sectiondelete",function(){
-            
+    $("#section_id").on("change",function(){
+        let section_id=$(this).val();
+        $.ajax({
+            type:"get",
+            url:`/admin/management/catalogue/get-ajax-categories`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "section_id":section_id,
+                
+            },
+            success:function(resp){
+             $("#category_id").html(resp);
+            },
+            error:function(){
+                console.log("error");
+            }
     })
   
 })
+});
 
 
 

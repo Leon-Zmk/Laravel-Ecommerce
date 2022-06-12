@@ -48,7 +48,16 @@ Route::prefix("/admin")->group(function(){
         Route::get("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
         Route::post("management/catalogue/delete/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"delete"])->name("sectionDelete");
 
-        
+
+        Route::get("/management/catalogue/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"Categories"])->name("categoriesManagement");
+        Route::get("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
+        Route::post("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
+        Route::get("management/catalogue/get-ajax-categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"getCategories"])->name("getCategories");
+        Route::post("management/catalogue/delete/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"delete"])->name("categoryDelete");
+        Route::get("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
+        Route::post("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
+        Route::post("/management/catalogue/delete-image/categories/",[App\Http\Controllers\AdminControllers\CategoryController::class,"deleteImage"])->name("deletecategoryImage");
+
         //catalogue
 
     });

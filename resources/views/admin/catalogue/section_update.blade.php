@@ -53,6 +53,9 @@
                                 <input type="text" value="{{$section->name}}" name="name" class="  form-control">
                                 <button class="btn ml-3 btn-secondary">Update</button>
                             </div>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </form>
                     </div>
                 </div>

@@ -60,6 +60,9 @@
                             <div class="form-group">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" id="name" name="name" class="  form-control">
+                                @error('name')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                              <div class="form-group">
                                 <label for="section_id">Section</label>
@@ -69,6 +72,9 @@
                                       <option value="{{$section->id}}">{{$section->name}}</option>
                                   @endforeach
                                 </select>
+                                @error('section_id')
+                                   <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="append-category">
                               @include("admin.catalogue.append_category")
@@ -76,14 +82,23 @@
                              <div class="form-group">
                                 <label for="url">URL</label>
                                 <input type="text" name="url" id="url" class="  form-control">
+                                @error('url')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                              <div class="form-group">
                                 <label for="description">Description</label>
                                 <input type="text" name="description" id="description" class="  form-control">
+                                @error('description')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                              <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" name="image" id="image" class="form-control">
+                                @error('image')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                              <button class="btn btn-primary">Add</button>
                         </form>

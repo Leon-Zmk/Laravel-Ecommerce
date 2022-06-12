@@ -17,4 +17,8 @@
            
      @endif
     </select>
+
+    @error('category_id')
+       <span class="text-danger">{{$message}}</span>
+    @enderror
 </div>

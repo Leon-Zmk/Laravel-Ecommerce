@@ -17,6 +17,11 @@ class SectionController extends Controller
     public function addUpdateSections(Request $request,$id=null){
 
         if(empty($id)){
+
+            $request->validate([
+                "name"=>"required|regex:/^[a-zA-Z]+$/u|max:50"
+            ]);
+
             $section=new Section();
             $section->name=$request->name;
             $section->save();
@@ -26,6 +31,11 @@ class SectionController extends Controller
             $section=Section::find($id);
 
            if($request->isMethod("post")){
+
+                $request->validate([
+                    "name"=>"required|regex:/^[a-zA-Z]+$/u|max:50"
+                ]);
+
                 $section=Section::find($id);
                 $section->name=$request->name;
                 $section->update();

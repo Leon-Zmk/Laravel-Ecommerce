@@ -65,6 +65,11 @@
                                 <input type="text" name="name" class="  form-control">
                                 <button class="btn ml-3 btn-secondary">Add</button>
                             </div>
+                            @error("name")
+
+                              <span class="text-danger">{{$message}}</span>
+
+                            @enderror
                         </form>
                     </div>
                 </div>

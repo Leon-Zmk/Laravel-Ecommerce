@@ -55,11 +55,17 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{route("addCategories")}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route("categoryUpdate")}}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <input type="text" name="id" value="{{$category->id}}" hidden>
                             <div class="form-group">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" id="name" name="name" value="{{$category->name}}" class="  form-control">
+                                @error("name")
+
+                                  <span class="text-danger">{{$message}}</span>
+
+                                @enderror
                             </div>
                              <div class="form-group">
                                 <label for="section_id">Section</label>
@@ -69,6 +75,11 @@
                                       <option value="{{$section->id}}" @if($category->section_id==$section->id) selected @endif>{{$section->name}}</option>
                                   @endforeach
                                 </select>
+                                @error("section_id")
+
+                                   <span class="text-danger">{{$message}}</span>
+
+                                @enderror
                             </div>
                             <div class="append-category">
                               @include("admin.catalogue.append_category")
@@ -76,16 +87,48 @@
                              <div class="form-group">
                                 <label for="url">URL</label>
                                 <input type="text" value="{{$category->url}}" name="url" id="url" class="  form-control">
+
+                                @error("url")
+
+                                   <span class="text-danger">{{$message}}</span>
+
+                                @enderror
                             </div>
                              <div class="form-group">
                                 <label for="description">Description</label>
                                 <input type="text" value="{{$category->description}}" name="description" id="description" class="  form-control">
+
+                                @error("description")
+
+                                  <span class="text-danger">{{$message}}</span>
+
+                                @enderror
+
                             </div>
                              <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" name="image" id="image" class="form-control">
-                            </div>
-                             <button class="btn btn-primary">Add</button>
+
+                                @error("image")
+
+                                   <span class="text-danger">{{$message}}</span>
+
+                                 @enderror
+                              </div>
+
+                            @if(!empty($category->image))
+                                <div class="form-group">
+                                  <a href="{{asset("storage/categories_images/".$category->image)}}">View Image</a> | <button class="border-0 text-primary" form="delete-category-image">Delete</button>
+                                </div>
+                            @endif
+
+                            <button class="btn btn-primary">Update</button>
+                            
+                        </form>
+
+                        <form action="{{route("deletecategoryImage")}}" method="POST" id="delete-category-image">
+                          @csrf
+                          <input type="text" name="category_id" value="{{$category->id}}" hidden>
                         </form>
                     </div>
                 </div>
