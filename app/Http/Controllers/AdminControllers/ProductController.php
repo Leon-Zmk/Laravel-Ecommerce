@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\ProductsAttribute;
 use App\Models\Section;
+use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -162,7 +165,7 @@ class ProductController extends Controller
         
     }
 
-    public function delete(Request $request,$id){
+    public function deleteProduct(Request $request,$id){
         
         if($id){
             $product=Product::find($request->id);
@@ -180,4 +183,97 @@ class ProductController extends Controller
 
         return redirect()->back()->with("delete_message","Product Delete Successfully");
     }
+
+    public function addAttributes(Request $request,$id=null){
+        
+        $product=Product::select("id","price","name","color","image","code")->with("attributes")->find($id);
+
+        if($request->isMethod("post")){
+
+            $request->validate([
+                "sizes.*"=>"required|unique:products_attributes,size|max:10",
+                "skus.*"=>"required|unique:products_attributes,sku|max:10",
+                "prices.*"=>"required|numeric",
+                "stocks.*"=>"required|numeric"
+            ]);
+
+            $product_id=$request->product_id;
+            $sku=$request->skus;
+
+            foreach ($sku as $key => $value) {
+                
+                $attributes=new ProductsAttribute();
+                $attributes->product_id=$product_id;
+                $attributes->sku=$value;
+                $attributes->size=$request->sizes[$key];
+                $attributes->price=$request->prices[$key];
+                $attributes->stock=$request->stocks[$key];
+                
+                $attributes->save();
+
+                
+            }
+            return redirect()->back()->with("success_message","Attributes added successfully");
+
+        }
+
+        return view("admin.catalogue.add_attributes",compact("product"));
+
+    }
+
+
+
+    public function status(Request $request){
+
+        $attribute=ProductsAttribute::find($request->attribute_id);
+        if($request->status=="active"){
+            $attribute->status=0;
+        }
+        else{
+            $attribute->status=1;
+        }
+
+        $attribute->update();
+
+        return response($attribute->status);
+    
+
+}
+
+     public function updateAttribute(Request $request){
+
+       
+        
+        $attributesid=$request->attributesid;
+
+        foreach ($attributesid as $key => $value) {
+
+            $request->validate([
+                "uprices.*"=>"required|numeric",
+                "ustocks.*"=>"required|numeric"
+            ]);
+
+            $attribute=ProductsAttribute::where("id","$value")->first();
+            $attribute->price=$request->uprices[$key];
+            $attribute->stock=$request->ustocks[$key];
+
+            $attribute->update();
+        }
+
+
+        return redirect()->back()->with("success_message","Attribute Updated Successfully");
+
+        
+
+     }
+
+     public function deleteAttribute(Request $request){
+         $attributeid=$request->attributeid;
+         $attribute=ProductsAttribute::find($attributeid);
+
+         $attribute->delete();
+
+         return redirect()->back()->with("delete_message","Attribute Deleted Successfully");
+     }
+
 }

@@ -89,7 +89,7 @@
                               <td>{{$product->category->name}}</td>
                               <td>
                                 
-                                <img src="{{asset("storage/frontend/products/small/$product->image")}}" class="rounded rounded-circle" alt="">
+                                <img src="{{asset("storage/frontend/products/small/$product->image")}}" style="width:150px;height:150px" class="rounded rounded-circle" alt="">
                               </td>
                               <td>
                                 @if($product->color)
@@ -105,6 +105,7 @@
                               </td>
                               <td>
                                 <a href="{{route("productUpdate",$product->id)}}"><i class="text-primary fas fa-user-edit"></i></a>
+                                <a href="{{route("attributes",$product->id)}}"><i class="text-primary fas fa-plus-square"></i></a>
                                 <form action="{{route("productDelete",$product->id)}}" class="d-inline" method="POST">
 
                                   @csrf
@@ -114,6 +115,7 @@
                                   </button>
 
                                 </form>
+
                               </td>
                               <td>{{$product->created_at}}</td>
                           </tr>

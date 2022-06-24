@@ -68,13 +68,20 @@ Route::prefix("/admin")->group(function(){
         Route::get("/management/catalogue/products",[App\Http\Controllers\AdminControllers\ProductController::class,"products"])->name("productsManagement");
         Route::get("management/catalogue/add/products",[App\Http\Controllers\AdminControllers\ProductController::class,"addproducts"])->name("addproducts");
         Route::post("management/catalogue/add/products",[App\Http\Controllers\AdminControllers\ProductController::class,"addproducts"])->name("addproducts");
-        Route::post("management/catalogue/delete/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"delete"])->name("productDelete");
+        Route::post("management/catalogue/delete/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteProduct"])->name("productDelete");
         Route::get("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
         Route::post("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
         Route::post("/management/catalogue/delete-image/products/",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteImage"])->name("deleteproductImage");
 
+        
+        Route::get("/management/catalogue/add/attributes/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"addAttributes"])->name("attributes");
+        Route::post("/management/catalogue/add/attributes/",[App\Http\Controllers\AdminControllers\ProductController::class,"addAttributes"])->name("addattributes");
+        Route::post("/management/attributes/status",[App\Http\Controllers\AdminControllers\ProductController::class,"status"])->name("manageattributeStatus");
+        Route::post("/management/catalogue/update/attributes/",[App\Http\Controllers\AdminControllers\ProductController::class,"updateAttribute"])->name("attributeUpdate");
+        Route::post("/management/catalogue/delete/attributes/",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteAttribute"])->name("attributeDelete");
 
-        //catalogue
+
+        
 
 
 

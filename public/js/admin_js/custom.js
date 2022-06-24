@@ -55,6 +55,36 @@ $(document).ready(function(){
       
     })
 
+    $(document).on("click",".attrtoggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let attribute_id=$(this).attr("attribute_id");
+      
+        $.ajax({
+            type:"Post",
+            url:`/admin/management/attributes/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "attribute_id":attribute_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#attribute-id-'+attribute_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i>');
+               }else{
+                $('#attribute-id-'+attribute_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+
     $("#section_id").on("change",function(){
         let section_id=$(this).val();
         $.ajax({
@@ -74,6 +104,43 @@ $(document).ready(function(){
     })
   
 })
+
+
+
+
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = `
+    
+        <div class="mb-4">
+            <input style="width: 120px" type="text" placeholder="Size" name="sizes[]" value=""/>
+            <input style="width: 120px" type="text" placeholder="Sku" name="skus[]" value=""/>
+            <input style="width: 120px" type="number" placeholder="Price" name="prices[]" value=""/>
+            <input style="width: 120px" type="number" placeholder="Stock" name="stocks[]" value=""/>
+            <a href="javascript:void(0);" class="remove_button mt-2 btn btn-sm btn-danger">Remove</a>
+        </div>
+
+    
+`; //New input field html 
+    var x = 1; //Initial field counter is 1
+    
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+
 });
 
 
@@ -95,3 +162,6 @@ image.addEventListener("change",function(){
     reader.readAsDataURL(file);
 })
 }
+
+
+
