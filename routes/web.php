@@ -58,13 +58,39 @@ Route::prefix("/admin")->group(function(){
         Route::post("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
         Route::post("/management/catalogue/delete-image/categories/",[App\Http\Controllers\AdminControllers\CategoryController::class,"deleteImage"])->name("deletecategoryImage");
 
+
+        Route::get("/management/catalogue/brands",[App\Http\Controllers\AdminControllers\BrandController::class,"brands"])->name("brandsManagement");
+        Route::post("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
+        Route::get("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
+        Route::post("management/catalogue/delete/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"delete"])->name("brandDelete");
+
+
+        Route::get("/management/catalogue/products",[App\Http\Controllers\AdminControllers\ProductController::class,"products"])->name("productsManagement");
+        Route::get("management/catalogue/add/products",[App\Http\Controllers\AdminControllers\ProductController::class,"addproducts"])->name("addproducts");
+        Route::post("management/catalogue/add/products",[App\Http\Controllers\AdminControllers\ProductController::class,"addproducts"])->name("addproducts");
+        Route::post("management/catalogue/delete/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"delete"])->name("productDelete");
+        Route::get("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
+        Route::post("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
+        Route::post("/management/catalogue/delete-image/products/",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteImage"])->name("deleteproductImage");
+
+
         //catalogue
+
+
+
+
+
+
+
+        // logout
+
+        Route::get("/logout",[App\Http\Controllers\AdminControllers\AdminController::class,"logout"])->name("dlogout");
+
 
     });
    
     Route::get("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");
     Route::post("/login",[App\Http\Controllers\AdminControllers\AdminController::class,"login"])->name("dlogin");
-    Route::get("/logout",[App\Http\Controllers\AdminControllers\AdminController::class,"logout"])->name("dlogout");
 
 
 

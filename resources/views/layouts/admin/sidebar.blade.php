@@ -170,9 +170,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route("brandsManagement")}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Sub Catagories </p>
+                  <p>Brands </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("productsManagement")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Products </p>
                 </a>
               </li>
             </ul>

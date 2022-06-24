@@ -12,13 +12,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Sections Management</h1>
+              <h1>Brands Management</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">Catalogue Management</li>
-                <li class="breadcrumb-item active">Update Section</li>
+                <li class="breadcrumb-item active">Brands</li>
 
               </ol>
             </div>
@@ -42,25 +42,78 @@
                 </div>
                @endif
 
+               @if(session("deleted_message"))
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 <strong>  {{session("deleted_message")}} </strong>
+               
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+              @endif
+
+               
+
                 <div class="card col-12 col-md-5">
                     <div class="card-header">
-                        Update Section
+                        Add Section
                     </div>
                     <div class="card-body">
-                        <form action="{{route("ausections",$section->id)}}" method="POST">
+                        <form action="{{route("auBrands")}}" method="POST">
                             @csrf
                             <div class="form-group d-flex justify-content-between">
-                                <input type="text" value="{{$section->name}}" name="name" class="  form-control">
-                                <button class="btn ml-3 btn-secondary">Update</button>
+                                <input type="text" name="name" class="  form-control">
+                                <button class="btn ml-3 btn-secondary">Add</button>
                             </div>
-                            @error('name')
-                                <span class="text-danger">{{$message}}</span>
+                            @error("name")
+
+                              <span class="text-danger">{{$message}}</span>
+
                             @enderror
                         </form>
                     </div>
                 </div>
                 
-              
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Manage Brands</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Control</th>
+                            <th>Created_at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach ($brands as $brand)
+                            <tr>
+                                <td>{{$brand->id}}</td>
+                                <td>{{$brand->name}}</td>
+                                <td class="text-center">
+                                    <a href="{{route("auBrands",$brand->id)}}"><i class="fas fa-user-edit"></i></a>
+                                    <form action="{{route("brandDelete",$brand->id)}}" class="d-inline" method="POST">
+                                      @csrf
+                                      <button class=" border-0"><i class="text-primary fas fa-trash-alt"></i></button>
+                                    </form>
+
+                                </td>
+                                <td>{{$brand->created_at->diffForHumans()}}</td>
+                            </tr>
+                        @endforeach
+                     
+                   
+                    </tbody>
+                  
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
               <!-- /.card -->
             </div>
             <!-- /.col -->

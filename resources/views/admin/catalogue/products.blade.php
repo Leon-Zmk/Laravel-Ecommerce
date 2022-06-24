@@ -12,13 +12,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Sections Management</h1>
+              <h1>Products Management</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">Catalogue Management</li>
-                <li class="breadcrumb-item active">Update Section</li>
+                <li class="breadcrumb-item active">Products</li>
 
               </ol>
             </div>
@@ -42,25 +42,90 @@
                 </div>
                @endif
 
-                <div class="card col-12 col-md-5">
-                    <div class="card-header">
-                        Update Section
-                    </div>
-                    <div class="card-body">
-                        <form action="{{route("ausections",$section->id)}}" method="POST">
-                            @csrf
-                            <div class="form-group d-flex justify-content-between">
-                                <input type="text" value="{{$section->name}}" name="name" class="  form-control">
-                                <button class="btn ml-3 btn-secondary">Update</button>
-                            </div>
-                            @error('name')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </form>
-                    </div>
-                </div>
+               @if(session("delete_message"))
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 <strong>  {{session("delete_message")}} </strong>
+               
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+              @endif
+               
+
+               
                 
-              
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <a href="{{route("addproducts")}}" class="btn btn-primary">Add Products</a>
+                  </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Section</th>
+                            <th>Category</th>
+                            <th>Image</th>
+                            <th>Color</th>
+                            <th>Add By</th>
+                            <th>Control</th>
+                            <th>Created_at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                       @foreach ($products as $product)
+                          <tr>
+                              <td>{{$product->id}}</td>
+                              <td>{{$product->name}}</td>
+                              <td>{{$product->code}}</td>
+                              <td>{{$product->section->name}}</td>
+                              <td>{{$product->category->name}}</td>
+                              <td>
+                                
+                                <img src="{{asset("storage/frontend/products/small/$product->image")}}" class="rounded rounded-circle" alt="">
+                              </td>
+                              <td>
+                                @if($product->color)
+                                   {{$product->color}}
+                               @endif
+                              </td>
+                              <td>
+                                @if ($product->admin_type=="vendor")
+                                      <a href="{{route("managementDetail",$product->vendor_id)}}">Vendor</a>
+                                   @else
+                                     {{$product->admin_type}}
+                                @endif
+                              </td>
+                              <td>
+                                <a href="{{route("productUpdate",$product->id)}}"><i class="text-primary fas fa-user-edit"></i></a>
+                                <form action="{{route("productDelete",$product->id)}}" class="d-inline" method="POST">
+
+                                  @csrf
+
+                                  <button class=" border-0">
+                                    <i class=" text-danger fas fa-trash-alt"></i>
+                                  </button>
+
+                                </form>
+                              </td>
+                              <td>{{$product->created_at}}</td>
+                          </tr>
+                       @endforeach
+                     
+                   
+                    </tbody>
+                  
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
               <!-- /.card -->
             </div>
             <!-- /.col -->

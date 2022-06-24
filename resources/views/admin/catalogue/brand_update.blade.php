@@ -12,13 +12,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Sections Management</h1>
+              <h1>Brands Management</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">Catalogue Management</li>
-                <li class="breadcrumb-item active">Update Section</li>
+                <li class="breadcrumb-item active">Brand Update</li>
 
               </ol>
             </div>
@@ -44,13 +44,13 @@
 
                 <div class="card col-12 col-md-5">
                     <div class="card-header">
-                        Update Section
+                        Update Brand
                     </div>
                     <div class="card-body">
-                        <form action="{{route("ausections",$section->id)}}" method="POST">
+                        <form action="{{route("auBrands",$brand->id)}}" method="POST">
                             @csrf
                             <div class="form-group d-flex justify-content-between">
-                                <input type="text" value="{{$section->name}}" name="name" class="  form-control">
+                                <input type="text" value="{{$brand->name}}" name="name" class="  form-control">
                                 <button class="btn ml-3 btn-secondary">Update</button>
                             </div>
                             @error('name')

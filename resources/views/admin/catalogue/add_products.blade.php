@@ -12,13 +12,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Categories Management</h1>
+              <h1>Products Management</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">Catalogue Management</li>
-                <li class="breadcrumb-item active"> Add Categories</li>
+                <li class="breadcrumb-item active">Add Products</li>
 
               </ol>
             </div>
@@ -48,14 +48,14 @@
                 <div class="card col-12 col-md-5">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="">
-                            Add Categories
+                            Add Products
                         </div>
                         <div class=" d-flex justify-content-end" style="width:250px">
-                            <a href="{{route("categoriesManagement")}}" class="btn btn-primary">Categories List</a>
+                            <a href="{{route("productsManagement")}}" class="btn btn-primary">Products List</a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{route("addCategories")}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route("addproducts")}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="name" class="form-label">Name</label>
@@ -65,24 +65,67 @@
                                 @enderror
                             </div>
                              <div class="form-group">
-                                <label for="section_id">Section</label>
-                                <select name="section_id" id="section_id" class=" custom-select">
-                                  <option selected disabled >Select Section</option>
-                                  @foreach ($sections as $section)
-                                      <option value="{{$section->id}}">{{$section->name}}</option>
-                                  @endforeach
+                                <label for="category_id">Select Category</label>
+                                <select name="category_id" id="category_id" class=" custom-select">
+                                  <option selected disabled >Select Category</option>
+                                    @foreach ($categories as $section)
+                                        <optgroup label="{{$section->name}}"></optgroup>
+
+                                        @foreach ($section->categories as $category)
+                                            <option value="{{$category->id}}">&nbsp;&nbsp;&raquo;{{$category->name}}</option>
+
+                                            @foreach ($category->subcategories as $scategory)
+                                            <option value="{{$scategory->id}}">&nbsp;&nbsp;&nbsp;&nbsp;&raquo;{{$scategory->name}}</option>
+                                            @endforeach
+
+                                        @endforeach
+                                       
+                                        
+                                    @endforeach
                                 </select>
-                                @error('section_id')
+                                @error('category_id')
                                    <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
-                            <div class="append-category">
-                              @include("admin.catalogue.append_category")
+                            <div class="form-group">
+                                <label for="brand_id">Select Brand</label>
+                                <select name="brand_id" id="brand_id" class=" custom-select">
+                                  <option selected disabled >Select Brand</option>
+                                    @foreach ($brands as $brand)
+                                      
+                                            <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                       
+                                    @endforeach
+                                </select>
+                                @error('brand_id')
+                                   <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
-                             <div class="form-group">
-                                <label for="url">URL</label>
-                                <input type="text" name="url" id="url" class="  form-control">
-                                @error('url')
+                            <div class="form-group">
+                                <label for="color">Color</label>
+                                <input type="text" name="color" id="color" class="  form-control">
+                                @error('color')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Code</label>
+                                <input type="text" name="code" id="code" class="  form-control">
+                                @error('code')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="text" name="price" id="price" class="  form-control">
+                                @error('price')
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="discount">Discount</label>
+                                <input type="text" name="discount" id="discount" class="  form-control">
+                                @error('discount')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
