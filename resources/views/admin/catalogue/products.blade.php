@@ -104,6 +104,15 @@
                                 @endif
                               </td>
                               <td>
+                                @if ($product->status==0)
+                                <a  class="prodtoggleStatus" id="product-id-{{$product->id}}" href="javascript:void(0)" product_id="{{$product->id}}" >
+                                  <i class="fas fa-toggle-off text-black" status="inactive"></i>
+                                </a>
+                              @else 
+                              <a  class="prodtoggleStatus" id="product-id-{{$product->id}}" href="javascript:void(0)" product_id="{{$product->id}}">
+                                  <i class="fas fa-toggle-on text-success" status="active"></i>
+                                </a>
+                                @endif
                                 <a href="{{route("productUpdate",$product->id)}}"><i class="text-primary fas fa-user-edit"></i></a>
                                 <a href="{{route("attributes",$product->id)}}"><i class="text-primary fas fa-plus-square"></i></a>
                                 <form action="{{route("productDelete",$product->id)}}" class="d-inline" method="POST">

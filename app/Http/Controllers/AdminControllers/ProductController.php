@@ -90,6 +90,21 @@ class ProductController extends Controller
         }
     }
 
+    public function productStatus(Request $request){
+
+        $product=Product::find($request->product_id);
+        if($request->status=="active"){
+            $product->status=0;
+        }
+        else{
+            $product->status=1;
+        }
+
+        $product->update();
+
+        return response($product->status);
+    }
+
     public function update(Request $request,$id=null){
 
         if($request->isMethod("POST")){

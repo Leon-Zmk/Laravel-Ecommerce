@@ -55,6 +55,36 @@ $(document).ready(function(){
       
     })
 
+    $(document).on("click",".prodtoggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let product_id=$(this).attr("product_id");
+      
+        $.ajax({
+            type:"Post",
+            url:`/admin/management/product/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "product_id":product_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#product-id-'+product_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i>');
+               }else{
+                $('#product-id-'+product_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+
     $(document).on("click",".attrtoggleStatus",function(){
         
 

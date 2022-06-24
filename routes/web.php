@@ -71,6 +71,7 @@ Route::prefix("/admin")->group(function(){
         Route::post("management/catalogue/delete/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteProduct"])->name("productDelete");
         Route::get("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
         Route::post("/management/catalogue/update/products/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"update"])->name("productUpdate");
+        Route::post("/management/product/status",[App\Http\Controllers\AdminControllers\ProductController::class,"productStatus"])->name("manageproductstatus");
         Route::post("/management/catalogue/delete-image/products/",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteImage"])->name("deleteproductImage");
 
         
