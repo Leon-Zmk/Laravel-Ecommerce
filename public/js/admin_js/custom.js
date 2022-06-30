@@ -115,6 +115,36 @@ $(document).ready(function(){
       
     })
 
+    $(document).on("click",".imagetoggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let image_id=$(this).attr("image_id");
+      
+        $.ajax({
+            type:"Post",
+            url:`/admin/management/images/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "image_id":image_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#image-id-'+image_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i>');
+               }else{
+                $('#image-id-'+image_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+
     $("#section_id").on("change",function(){
         let section_id=$(this).val();
         $.ajax({

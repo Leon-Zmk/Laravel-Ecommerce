@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductsAttribute;
+use App\Models\ProductsImage;
 use App\Models\Section;
 use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Support\Facades\Auth;
@@ -289,6 +290,96 @@ class ProductController extends Controller
          $attribute->delete();
 
          return redirect()->back()->with("delete_message","Attribute Deleted Successfully");
+     }
+
+
+     
+     ///////Images
+
+
+     public function addImages(Request $request,$id=null){
+        
+        $product=Product::select("id","price","name","color","image","code")->with("images")->find($id);
+
+        if($request->isMethod("POST")){
+
+            $request->validate([
+                "images"=>"required",
+                "images.*"=>"file|mimes:jpg,png|max:5000"
+            ]);
+
+            $id=$request->product_id;
+            if($request->hasFile("images")){
+                $files=$request->file("images");
+
+             
+
+
+                foreach ($files as $key => $file) {
+                    
+                    $newName=uniqid()."_product_image_.".$file->extension();
+                    
+                    Image::make($file)->resize(255,255)->save("storage/frontend/products/small/".$newName);
+                    Image::make($file)->resize(500,500)->save("storage/frontend/products/medium/".$newName);
+                    Image::make($file)->resize(1000,1000)->save("storage/frontend/products/large/".$newName);
+
+
+                    $productimages=new ProductsImage();
+                    $productimages->product_id=$id;
+                    $productimages->status=1;
+                    $productimages->name=$newName;
+                    $productimages->save();
+                }
+
+                return redirect()->back()->with("success_message","Product Images Added Successfully");
+
+            }
+
+
+        }
+
+        return view("admin.catalogue.add_images",compact("product"));
+     }
+
+
+     public function imageStatus(Request $request){
+
+        $image=ProductsImage::find($request->image_id);
+        if($request->status=="active"){
+            $image->status=0;
+        }
+        else{
+            $image->status=1;
+        }
+
+        $image->update();
+
+        return response($image->status);
+    
+
+     }
+
+     public function imageDelete(Request $request){
+
+        $request->validate([
+            "imageid"=>"required|exists:products_images,id",
+        ]);
+
+        $id=$request->imageid;
+
+        $image=ProductsImage::find($id);
+
+
+            Storage::delete("public/frontend/products/small/".$image->name);
+            Storage::delete("public/frontend/products/medium/".$image->name);
+            Storage::delete("public/frontend/products/large/".$image->name);
+
+        
+
+        $image->delete();
+        
+        return redirect()->back()->with("delete_message","Product Images Deleted Successfully");
+
      }
 
 }

@@ -25,6 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix("/admin")->group(function(){
 
     Route::middleware("admin")->group(function(){
+        
         Route::get("/dashboard",[App\Http\Controllers\AdminControllers\AdminController::class,"dashboard"])->name("dashboard");
         Route::get("/update-admin-password",[App\Http\Controllers\AdminControllers\AdminController::class,"updatePassword"])->name("apupdate");
         Route::post("/update-admin-password",[App\Http\Controllers\AdminControllers\AdminController::class,"updatePassword"])->name("apupdate");
@@ -81,13 +82,13 @@ Route::prefix("/admin")->group(function(){
         Route::post("/management/catalogue/update/attributes/",[App\Http\Controllers\AdminControllers\ProductController::class,"updateAttribute"])->name("attributeUpdate");
         Route::post("/management/catalogue/delete/attributes/",[App\Http\Controllers\AdminControllers\ProductController::class,"deleteAttribute"])->name("attributeDelete");
 
+        Route::get("/management/catalogue/add/images/{id?}",[App\Http\Controllers\AdminControllers\ProductController::class,"addImages"])->name("images");
+        Route::post("/management/catalogue/add/images/",[App\Http\Controllers\AdminControllers\ProductController::class,"addImages"])->name("addimages");
+        Route::post("/management/images/status",[App\Http\Controllers\AdminControllers\ProductController::class,"imageStatus"])->name("manageimageStatus");
+        Route::post("/management/catalogue/delete/images/",[App\Http\Controllers\AdminControllers\ProductController::class,"imageDelete"])->name("imagedelete");
+
 
         
-
-
-
-
-
 
 
         // logout
@@ -104,6 +105,11 @@ Route::prefix("/admin")->group(function(){
 
  
 });
+
+Route::get("/",[App\Http\Controllers\FrontendControllers\IndexController::class,"index"])->name("index");
+
+
+
 
 Auth::routes();
 

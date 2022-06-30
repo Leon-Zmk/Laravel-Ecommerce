@@ -114,7 +114,9 @@
                                 </a>
                                 @endif
                                 <a href="{{route("productUpdate",$product->id)}}"><i class="text-primary fas fa-user-edit"></i></a>
-                                <a href="{{route("attributes",$product->id)}}"><i class="text-primary fas fa-plus-square"></i></a>
+                                <a href="{{route("attributes",$product->id)}}" title="Add Attributes"><i class="text-primary fas fa-plus-square"></i></a>
+                                <a href="{{route("images",$product->id)}}" title="Add Images"><i class="text-primary fas fa-plus-circle"></i></a>
+
                                 <form action="{{route("productDelete",$product->id)}}" class="d-inline" method="POST">
 
                                   @csrf
