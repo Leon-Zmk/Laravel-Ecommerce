@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
 
     <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.0/css/fontawesome.min.css" rel="stylesheet">
+    <link href={{asset("plugins/fontawesome-free/css/all.css")}} rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href={{asset("frontend_plugins/lib/animate/animate.min.css")}} rel="stylesheet">
@@ -24,6 +24,10 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href={{asset("css/frontend/style.css")}} rel="stylesheet">
+
+    {{-- custom css --}}
+
+    <link href={{asset("css/frontend/custom_style.css")}} rel="stylesheet">
 </head>
 
 <body>
@@ -39,6 +43,7 @@
 
   <!-- JavaScript Libraries -->
   <script src={{asset("js/frontend/jquery.min.js")}}></script>
+  <script src={{asset("js/frontend/jquery_ajax.js")}}></script>
   <script src={{asset("js/frontend/bootstrap.bundle.min.js")}}></script>
   <script src={{asset("frontend_plugins/lib/easing/easing.min.js")}}></script>
   <script src={{asset("frontend_plugins/lib/owlcarousel/owl.carousel.min.js")}}></script>

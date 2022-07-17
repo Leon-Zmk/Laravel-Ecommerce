@@ -2,6 +2,11 @@
 
 @section("content")
 
+<?php
+
+
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -250,28 +255,28 @@
                     </div>
                     <div class="form-group">
                       <label for="shop_name">Shop Name</label>
-                      <input type="shop_name" name="shop_name" value="{{Auth::guard("admin")->user()->business->shop_name}}"   class="form-control" id="shop_name"  placeholder="shop_name">
+                      <input type="shop_name" name="shop_name" value='{{auth()->guard('admin')->user()->business->shop_name}}'  class="form-control" id="shop_name"  placeholder="shop_name">
                       @error('shop_name')
                           {{$message}}
                       @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_address">Address</label>
-                      <input type="shop_address" name="shop_address" value="{{Auth::guard("admin")->user()->business->shop_address}}"   class="form-control" id="shop_address"  placeholder="shop_address">
+                      <input type="shop_address" name="shop_address"  value='{{ auth()->guard('admin')->user()->business->shop_address }}'   class="form-control" id="shop_address"  placeholder="shop_address">
                       @error('shop_address')
                       {{$message}}
                   @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_webiste">Website</label>
-                      <input type="shop_webiste" name="shop_webiste" value="{{Auth::guard("admin")->user()->business->shop_website}}"  class="form-control" id="shop_webiste"  placeholder="shop_website">
+                      <input type="shop_webiste" name="shop_webiste" value='{{ auth()->guard('admin')->user()->business->shop_website }}'  class="form-control" id="shop_webiste"  placeholder="shop_website">
                       @error('shop_website')
                       {{$message}}
                   @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_mobile">Mobile</label>
-                      <input type="shop_mobile" name="shop_mobile" value="{{Auth::guard("admin")->user()->business->shop_mobile}}"  class="form-control" id="shop_mobile"  placeholder="shop_mobile">
+                      <input type="shop_mobile" name="shop_mobile" value='{{ auth()->guard('admin')->user()->business->shop_mobile }}'  class="form-control" id="shop_mobile"  placeholder="shop_mobile">
                       @error('shop_mobile')
                       {{$message}}
                   @enderror

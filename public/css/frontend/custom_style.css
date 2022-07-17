@@ -1,0 +1,14 @@
+
+body{
+    user-select: none;
+}
+
+
+@media screen and (max-width:480px){
+
+.overflow{
+    width: 100%;
+    overflow-x: scroll;
+}
+
+}

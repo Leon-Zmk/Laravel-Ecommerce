@@ -62,7 +62,7 @@
 
     // Related carousel
     $('.related-carousel').owlCarousel({
-        loop: true,
+        loop: false,
         margin: 29,
         nav: false,
         autoplay: true,
@@ -101,4 +101,112 @@
     });
     
 })(jQuery);
+
+
+
+
+    $(".brand").on("click",function(){
+
+        let brand=get_brand_filter();
+        let color=get_color_filter();
+        let size=get_size_filter();
+        let locat=$("#url").val();
+        
+        $.ajax({
+            method:"post",
+            url:locat,
+            data:{
+                "brand":brand,
+                "color":color,
+                "size":size,
+                "_token":$("#csrf").val()
+            },
+            success:function(data){
+                $(".test").html(data);
+            }
+        })
+
+    })
+
+    $(".size").on("click",function(){
+
+        let brand=get_brand_filter();
+        let color=get_color_filter();
+        let size=get_size_filter();
+        let locat=$("#url").val();
+        
+        $.ajax({
+            method:"post",
+            url:locat,
+            data:{
+                "brand":brand,
+                "color":color,
+                "size":size,
+                "_token":$("#csrf").val()
+            },
+            success:function(data){
+                $(".test").html(data);
+            }
+        })
+
+    })
+
+    $(".color").on("click",function(){
+
+        let color=get_color_filter();
+        let brand=get_brand_filter();
+        let size=get_size_filter();
+        let locat=$("#url").val();
+        
+        $.ajax({
+            method:"post",
+            url:locat,
+            data:{
+                "color":color,
+                "brand":brand,
+                "size":size,
+                "_token":$("#csrf").val()
+            },
+            success:function(data){
+                $(".test").html(data);
+            }
+        })
+
+    })
+
+
+
+    function get_brand_filter(){
+         var filter=[]
+        $("."+"brand:checked").each(function(){
+            filter.push($(this).val())
+        })
+
+        return filter;
+        
+    }
+
+    
+    function get_size_filter(){
+        var filter=[]
+       $("."+"size:checked").each(function(){
+           filter.push($(this).val())
+       })
+
+       return filter;
+       
+   }
+
+
+    function get_color_filter(){
+        var filter=[]
+       $("."+"color:checked").each(function(){
+           filter.push($(this).val())
+       })
+
+       return filter;
+       
+   }
+
+
 

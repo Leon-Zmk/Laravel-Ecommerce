@@ -22,6 +22,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+
+Route::get("/vendor/register",[App\Http\Controllers\AdminControllers\AdminController::class,"Register"])->name("vregister");
+Route::post("/vendor/register",[App\Http\Controllers\AdminControllers\AdminController::class,"Register"])->name("vregister");
+
+
 Route::prefix("/admin")->group(function(){
 
     Route::middleware("admin")->group(function(){
@@ -33,6 +38,9 @@ Route::prefix("/admin")->group(function(){
 
         Route::get("/update-admin-details",[App\Http\Controllers\AdminControllers\AdminController::class,"updateDetails"])->name("adupdate");
         Route::post("/update-admin-details",[App\Http\Controllers\AdminControllers\AdminController::class,"updateDetails"])->name("adupdate");
+
+        Route::get("/register-shop",[App\Http\Controllers\AdminControllers\AdminController::class,"registerShop"])->name("registershop");
+        Route::post("/register-shop",[App\Http\Controllers\AdminControllers\AdminController::class,"registerShop"])->name("registershop");
 
         Route::get("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
         Route::post("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
@@ -106,7 +114,18 @@ Route::prefix("/admin")->group(function(){
  
 });
 
+
+
 Route::get("/",[App\Http\Controllers\FrontendControllers\IndexController::class,"index"])->name("index");
+Route::get("/item/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"itemDetail"])->name("itemdetail");
+Route::get("shoping/",[App\Http\Controllers\FrontendControllers\IndexController::class,"shop"])->name("shop");
+Route::get("/specific/{category?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"specific"])->name("specific");
+Route::post("/specific/{category?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"specific"])->name("specific");
+
+Route::get("/vendors",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendors"])->name("vendors");
+Route::get("/vendor/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendorDetail"])->name("vendordetail");
+
+
 
 
 

@@ -20,7 +20,7 @@ class CategoryController extends Controller
         if($request->isMethod("post")){
 
             $request->validate([
-                "name"=>"required|max:10",
+                "name"=>"required|max:20",
                 "category_id"=>"required",
                 "section_id"=>"required|exists:sections,id",
                 "description"=>"nullable",

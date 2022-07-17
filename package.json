@@ -21,6 +21,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "jquery-ajax-unobtrusive": "^3.2.6",
         "sweetalert2": "^11.4.17"
     }
 }

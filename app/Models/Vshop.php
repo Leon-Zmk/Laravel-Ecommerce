@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Vshop extends Model
 {
     use HasFactory;
+
+    public function owner(){
+        return $this->belongsTo(Vendor::class,"shop_owner");
+    }
 }

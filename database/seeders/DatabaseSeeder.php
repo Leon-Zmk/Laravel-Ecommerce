@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(AdminSeeder::class);
         // $this->call(VendorSeeder::class);
         // $this->call(VshopSeeder::class);
-        $this->call(StatordivisionSeeder::class);
+        // $this->call(StatordivisionSeeder::class);
+        $this->call(FilterSeeder::class);
     }
 }

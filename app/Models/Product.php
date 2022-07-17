@@ -25,4 +25,10 @@ class Product extends Model
     public function images(){
         return $this->hasMany(ProductsImage::class);
     }
+
+    public function attributesSizes(){
+        return $this->hasMany(ProductsAttribute::class)->select("size");
+    }
+
+    
 }

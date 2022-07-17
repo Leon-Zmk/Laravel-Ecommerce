@@ -17,6 +17,110 @@ class AdminController extends Controller
     public function dashboard(){
         return view("admin.dashboard");
     }
+
+
+    public function Register(Request $request){
+
+
+        if($request->isMethod("POST")){
+
+            $request->validate([
+              
+            ]);
+
+            $vendor=new Vendor();
+            $vendor->name=$request->name;
+            $vendor->city=$request->city;
+            $vendor->email=$request->email;
+            $vendor->phone=$request->phone;
+            $vendor->address=$request->address;
+
+
+            $vendor->save();
+
+            $admin=new Admin();
+            $admin->name=$request->name;
+            $admin->type="Vendor";
+            $admin->vendor_id=$vendor->id;
+            $admin->mobile=$request->phone;
+            $admin->email=$request->email;
+            $admin->password=Hash::make($request->password);
+            $admin->status=0;
+
+            $admin->save();
+
+            return redirect()->route("dlogin");
+
+        }else{
+
+            return view("admin.register");
+
+        }
+
+       
+
+
+    }
+
+    public function registerShop(Request $request){
+
+
+        if($request->isMethod("POST")){
+            $request->validate([
+                "shop_name"=>"required|max:20",
+                "shop_address"=>"required",
+                "shop_website"=>"nullable",
+                "shop_mobile"=>"required",
+                "shop_profile"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
+                "shop_background_profile"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
+                "shop_image_verification"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
+            ]);
+
+            $shop=new Vshop();
+            $shop->shop_name=$request->shop_name;
+            $shop->shop_address=$request->shop_address;
+            $shop->shop_website=$request->shop_website;
+            $shop->shop_owner=Auth::guard("admin")->user()->vendor_id;
+            $shop->shop_mobile=$request->shop_mobile;
+
+            if($request->hasFile("shop_profile")){
+                $img=$request->file("shop_profile");
+                $newName=uniqid().Auth::guard("admin")->user()->id."shop_profile_image.".$img->extension();
+
+                Image::make($img)->save("storage/shop_profiles/$newName");
+
+                $shop->shop_profile=$newName;
+
+            }
+           
+            if($request->hasFile("shop_background_profile")){
+                $img=$request->file("shop_background_profile");
+                $newName=uniqid().Auth::guard("admin")->user()->id."shop_background_image.".$img->extension();
+
+                Image::make($img)->save("storage/shop_backgrounds/$newName");
+
+                $shop->shop_background_profile=$newName;
+
+            }
+
+            if($request->hasFile("shop_image_verification")){
+                $img=$request->file("shop_image_verification");
+                $newName=uniqid().Auth::guard("admin")->user()->id."verification_image.".$img->extension();
+
+                Image::make($img)->save("storage/verification_images/$newName");
+
+                $shop->shop_image_verification=$newName;
+
+            }
+           
+            $shop->save();
+
+            return redirect()->back()->with("success_message","Shop details Register Successfully");
+        
+        }
+        return view("vendors.register_shop");
+    }
+
     public function login(Request $request){
 
         if($request->isMethod("POST")){
@@ -201,6 +305,27 @@ class AdminController extends Controller
                 $shop->shop_address=$request->shop_address;
                 $shop->shop_website=$request->shop_website;
                 $shop->shop_mobile=$request->shop_mobile;
+
+                if($request->hasFile("shop_profile")){
+                    $img=$request->file("shop_profile");
+                    $newName=uniqid().Auth::guard("admin")->user()->id."shop_profile_image.".$img->extension();
+
+                    Image::make($img)->save("storage/shop_profiles/$newName");
+
+                    $shop->shop_profile=$newName;
+
+                }
+               
+                if($request->hasFile("shop_background_profile")){
+                    $img=$request->file("shop_background_profile");
+                    $newName=uniqid().Auth::guard("admin")->user()->id."shop_background_image.".$img->extension();
+
+                    Image::make($img)->save("storage/shop_backgrounds/$newName");
+
+                    $shop->shop_background_profile=$newName;
+
+                }
+               
 
                 if($request->hasFile("shop_image_verification")){
                     $img=$request->file("shop_image_verification");
