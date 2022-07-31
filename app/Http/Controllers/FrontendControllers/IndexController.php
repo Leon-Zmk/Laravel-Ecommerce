@@ -98,4 +98,13 @@ class IndexController extends Controller
 
     }
 
+    
+
+    public function getSizeQuantity(Request $request){
+
+        $product=ProductsAttribute::where("product_id","$request->product_id")->where("id","=","$request->product_attribute_id")->select("stock")->first();
+        $stock=$product->stock;
+        return response($stock);
+    }
+
 }

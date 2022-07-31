@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getOrderMemberId(){
+        return $this->hasOne(Orderpeople::class,"user_id");
+    }
 }

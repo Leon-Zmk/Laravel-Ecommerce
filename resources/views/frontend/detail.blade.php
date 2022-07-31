@@ -43,27 +43,25 @@
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
                     <h3>{{$product->name}}</h3>
-                    <div class="d-flex mb-3">
-                        <div class="text-primary mr-2">
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star-half-alt"></small>
-                            <small class="far fa-star"></small>
-                        </div>
-                        <small class="pt-1">(99 Reviews)</small>
-                    </div>
-                    <h3 class="font-weight-semi-bold mb-4">{{$product->price}}</h3>
+                    <br>
+                    <br>
+                    <h6 class="font-weight-semi-bold mb-4">Price:{{$product->price}}</h6>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
-                        <form>
-                            
+                        <form id="order" action="{{route("saveorder")}}" method="POST">
+
+                            @csrf
                             @foreach ($product->attributes as $attribute)
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" value="{{$attribute->size}}" id="{{$attribute->id}}" name="size">
+                                <input type="text" hidden id="product_id" name="product_id" value="{{$product->id}}">
+                                <input type="text" hidden id="quantity_url" value="{{route("getsizequantity")}}">
+                                <input type="text" hidden id="csrf" value="{{csrf_token()}}">
+                                <input type="radio" form="order"  class="custom-control-input size-radio"  value="{{$attribute->id}}" id="{{$attribute->id}}" name="product_attribute_id">
                                 <label class="custom-control-label" for="{{$attribute->id}}">{{$attribute->size}}</label>
                             </div>
                             @endforeach
+
+                            <input type="text" form="order" name="product_id" hidden value="{{$product->id}}" id="product_id">
 
                         </form>
                     </div>
@@ -73,18 +71,18 @@
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-primary btn-minus">
+                                <button class="btn  btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <input type="number" id="quantityinput" name="order_quantity" form="order"  class="form-control cartinput bg-secondary border-0 text-center quantityinput" value="1">
                             <div class="input-group-btn">
-                                <button class="btn btn-primary btn-plus">
+                                <button class="btn  btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                        <button form="order" class="btn btn-primary px-3 addtocart"><i class="fa fa-shopping-cart mr-1"></i> Add To
                             Cart</button>
                     </div>
                  
@@ -96,7 +94,6 @@
                 <div class="bg-light p-30">
                     <div class="nav nav-tabs mb-4">
                         <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
@@ -124,37 +121,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <h4 class="mb-4">Leave a review</h4>
-                                    <small>Your email address will not be published. Required fields are marked *</small>
-                                    <div class="d-flex my-3">
-                                        <p class="mb-0 mr-2">Your Rating * :</p>
-                                        <div class="text-primary">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="message">Your Review *</label>
-                                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name">Your Name *</label>
-                                            <input type="text" class="form-control" id="name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Your Email *</label>
-                                            <input type="email" class="form-control" id="email">
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                        </div>
-                                    </form>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

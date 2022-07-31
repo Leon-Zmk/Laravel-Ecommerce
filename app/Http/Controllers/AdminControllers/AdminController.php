@@ -300,7 +300,8 @@ class AdminController extends Controller
                     "shop_image_verification"=>"nullable|mimes:jpg,png|file|min:0|max:5000",
                 ]);
 
-                $shop=Vshop::find(Auth::guard("admin")->user()->vendor_id);
+                
+                $shop=Vshop::where("shop_owner",auth()->guard("admin")->user()->vendor_id)->first();
                 $shop->shop_name=$request->shop_name;
                 $shop->shop_address=$request->shop_address;
                 $shop->shop_website=$request->shop_website;
@@ -346,7 +347,8 @@ class AdminController extends Controller
             }
         }
 
-        return view("vendors.update_vendor_detail",compact("detail_type"));
+        $vshop=Vshop::where("shop_owner",auth()->guard("admin")->user()->vendor_id)->first();
+        return view("vendors.update_vendor_detail",compact("detail_type","vshop"));
     }
 
     /////////////// end update section

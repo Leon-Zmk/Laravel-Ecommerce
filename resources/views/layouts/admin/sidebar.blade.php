@@ -81,6 +81,43 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Catalogue Management 
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+              <li class="nav-item">
+                <a href="{{route("sectionsManagement")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sections </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("categoriesManagement")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Catagories</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("brandsManagement")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Brands </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("productsManagement")}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Products </p>
+                </a>
+              </li>
+            </ul>
+          </li>
           
           @else
           <li class="nav-item">

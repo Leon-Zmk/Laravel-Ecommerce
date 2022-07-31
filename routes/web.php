@@ -115,12 +115,21 @@ Route::prefix("/admin")->group(function(){
 });
 
 
+Route::middleware("auth")->group(function(){
+
+    Route::post("/add-cart",[App\Http\Controllers\FrontendControllers\OrderController::class,"saveOrder"])->name("saveorder");
+    Route::get("cart",[App\Http\Controllers\FrontendControllers\OrderController::class,"Cart"])->name("cart");
+    Route::post("updateCart/",[App\Http\Controllers\FrontendControllers\OrderController::class,"updateCart"])->name("updatecart");
+});
+
+
 
 Route::get("/",[App\Http\Controllers\FrontendControllers\IndexController::class,"index"])->name("index");
 Route::get("/item/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"itemDetail"])->name("itemdetail");
 Route::get("shoping/",[App\Http\Controllers\FrontendControllers\IndexController::class,"shop"])->name("shop");
 Route::get("/specific/{category?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"specific"])->name("specific");
 Route::post("/specific/{category?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"specific"])->name("specific");
+Route::post("/gsq",[App\Http\Controllers\FrontendControllers\IndexController::class,"getSizeQuantity"])->name("getsizequantity");
 
 Route::get("/vendors",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendors"])->name("vendors");
 Route::get("/vendor/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendorDetail"])->name("vendordetail");

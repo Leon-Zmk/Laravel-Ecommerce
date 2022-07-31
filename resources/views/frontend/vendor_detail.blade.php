@@ -9,13 +9,13 @@
          <div class="col-12 mb-4">
             <div class="card">
                <div class="card-img">
-                  <img src="{{asset("storage/frontend/products/small/product_default.png")}}" height="150px" class="w-100" alt="">
+                  <img src="{{asset("storage/shop_backgrounds/$vendor->shop_background_profile")}}" height="150px" class="w-100" alt="">
                </div>
             </div>
 
             <div class="card rounded border-right-0 border-left-0 border-bottom-0" style="background-color: #f5f5f5">
                <div class="card-img">
-                  <img src="{{asset("storage/frontend/products/small/product_default.png")}}" style="margin-top: -80px" height="150px" class="rounded-circle" alt="">
+                  <img src="{{asset("storage/shop_profiles/$vendor->shop_profile")}}" style="margin-top: -80px" height="150px" width="150px" class="rounded-circle" alt="">
                   <span>{{$vendor->shop_name}}</span>
                </div>
                
@@ -64,7 +64,8 @@
                      <p>{{$vendor->owner->city}}</p>
 
 
-            
+                     <h6>Shop Description </h6>
+                     <p> Our Shop</p>
 
                      <h6>Shop Address</h6>
                      <p>{{$vendor->shop_address}}</p>
