@@ -35,7 +35,7 @@
 
     // Vendor carousel
     $('.vendor-carousel').owlCarousel({
-        loop: true,
+        loop: false,
         margin: 29,
         nav: false,
         autoplay: true,
@@ -233,8 +233,11 @@
                      },
         
                      success:function(response){
-        
-                        quantity=response
+                        
+                        $("#itemprice").html(response["price"])
+                        quantity=response["stock"]
+
+                       
                         $(".quantity button").parent().parent().find('input').prop("min",1,true);
                         $(".quantity button").parent().parent().find('input').prop("max",quantity,true);
         

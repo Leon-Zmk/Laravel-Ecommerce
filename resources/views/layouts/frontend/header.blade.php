@@ -92,10 +92,13 @@
                           
                             <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">{{$section->name}} <i class="fa fa-angle-right float-right mt-1"></i></a>
                             @if (count($section->categories) > 0)
+                            <div class="dropdown-menu overflow   rounded border-0 m-0">
+                            <div class="d-flex w-100 h-100">
                             @foreach ($section->categories as $category)
-                            <div class="dropdown-menu overflow position-absolute  rounded border-0 m-0">
+                            
                               
-                                    <div class="d-flex justify-content-between align-items-center">
+                                   
+                                    <div class="d-inline justify-content-between align-items-center" >
                                         <div class="p-5"> 
                                             <a href="{{route("specific",$category->id)}}"  class="dropdown-item">{{$category->name}}</a>
                                             @if (count($category->subcategories)>0)
@@ -108,17 +111,15 @@
                                                 
                                             @endif
                                         </div>
-                                      
-                                       
-                                        
-
-                                        
                                         
                                     </div>
+                                   
                                     
                                  
-                            </div>
+                           
                             @endforeach
+                        </div>
+                        </div>
                             @endif
                            
                         </div>

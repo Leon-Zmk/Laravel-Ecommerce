@@ -13,6 +13,11 @@ body{
     pointer-events: none;
 }
 
+.overflow{
+    width: 100%;
+    overflow-x: scroll;
+}
+
 
 
 input[type=number]::-webkit-outer-spin-button,

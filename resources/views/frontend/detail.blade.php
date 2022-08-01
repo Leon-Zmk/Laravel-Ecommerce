@@ -26,10 +26,20 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
                         @foreach ($product->images as $key=>$image)
+
                         <div class="carousel-item  {{$key == 0 ? 'active' : ''}}">
+                               
+                         
+
                             <img class="w-100 h-100" src="{{asset("storage/frontend/products/medium/".$image->name)}}" alt="Image">
+
+                            
+
+                            
                         </div>
+                        
                         @endforeach
+                      
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -45,7 +55,7 @@
                     <h3>{{$product->name}}</h3>
                     <br>
                     <br>
-                    <h6 class="font-weight-semi-bold mb-4">Price:{{$product->price}}</h6>
+                    <h6 class="font-weight-semi-bold mb-4" >Price: <span id="itemprice">{{$product->price}}</span></h6>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
                         <form id="order" action="{{route("saveorder")}}" method="POST">
@@ -141,10 +151,10 @@
                    @foreach ($products as $key=>$producT)
                    <div class="{{"product-item-$key"}} bg-light">
                     <div class="{{"product-img-$key"}} position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="{{asset("images/frontend_img/img/product-1.jpg")}}" alt="">
+                        <img class="img-fluid w-100" src="{{asset("storage/frontend/products/small/$producT->image")}}" alt="">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="{{route("itemdetail",$product->id)}}"><i class="fas fa-info"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="{{route("itemdetail",$producT->id)}}"><i class="fas fa-info"></i></a>
                             
                         </div>
                     </div>
@@ -153,14 +163,7 @@
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>{{$producT->price}}</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
+                       
                     </div>
                 </div>
                    @endforeach

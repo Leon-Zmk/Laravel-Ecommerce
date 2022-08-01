@@ -48,7 +48,7 @@ class ProductController extends Controller
             
             
             $product->name=$request->name;
-            if(Auth::guard("admin")->user()->type=='vendor'){
+            if(Auth::guard("admin")->user()->type=='Vendor'){
                 $product->vendor_id=Auth::guard("admin")->user()->vendor_id;
             }else{
                 $product->vendor_id=0;
@@ -207,7 +207,7 @@ class ProductController extends Controller
         if($request->isMethod("post")){
 
             $request->validate([
-                "sizes.*"=>"required|unique:products_attributes,size|max:10",
+                "sizes.*"=>"required|max:10",
                 "skus.*"=>"required|unique:products_attributes,sku|max:10",
                 "prices.*"=>"required|numeric",
                 "stocks.*"=>"required|numeric"

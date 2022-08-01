@@ -377,7 +377,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src={{asset("images/frontend_img/img/product-1.jpg")}} alt="">
+                        <img class="img-fluid w-100" src={{asset("storage/frontend/products/small/$product->image")}} alt="">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{{route("itemdetail",$product->id)}}"><i class="fas fa-info"></i></a>
@@ -387,7 +387,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href=""> {{$product->name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                            <h5>$123.00</h5><h6 class="text-muted ml-2">@if($product->discount==0)   @else <del>{{$product->discount}}</del></h6>    @endif
                         </div>
                         
                     </div>
@@ -404,34 +404,19 @@
     <!-- Vendor Start -->
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
+            @foreach ($vshops as $vshop)
             <div class="col">
+              
                 <div class="owl-carousel vendor-carousel">
                     <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-1.jpg")}} alt="">
+                        <img src={{asset("storage/shop_profiles/$vshop->shop_profile")}} alt="">
+                        <h6 class="mt-4 text-center" style="word-break: break-all"><small>{{$vshop->shop_name}}</small></h6>
                     </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-2.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-3.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-4.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-5.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-6.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-7.jpg")}} alt="">
-                    </div>
-                    <div class="bg-light p-4">
-                        <img src={{asset("images/frontend_img/img/vendor-8.jpg")}} alt="">
-                    </div>
+                    
                 </div>
+              
             </div>
+            @endforeach
         </div>
     </div>
     <!-- Vendor End -->

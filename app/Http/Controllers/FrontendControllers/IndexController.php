@@ -15,14 +15,16 @@ class IndexController extends Controller
 
     public function index(){
         
-        return view("frontend.index");
+        $vshops=Vshop::all();
+        return view("frontend.index",compact("vshops"));
     }
 
     public function itemDetail(Request $request){
 
         $product=Product::find($request->id);
-        $products=Product::where("section_id","$product->section_id")->orWhere("vendor_id","$product->vendor_id")->take(1)->get();
+        $products=Product::where("section_id","$product->section_id")->Where("id","!=","$product->id")->Where("vendor_id","$product->vendor_id")->take(1)->get();
         
+
         return view("frontend.detail",compact("product","products"));
 
     }
@@ -91,7 +93,7 @@ class IndexController extends Controller
     public function vendorDetail(Request $request){
 
         $vendor=Vshop::find($request->id);
-        $products=Product::where("vendor_id","$request->id")->get();
+        $products=Product::where("vendor_id","$vendor->shop_owner")->get();
 
         
         return view("frontend.vendor_detail",compact("vendor","products"));
@@ -102,9 +104,10 @@ class IndexController extends Controller
 
     public function getSizeQuantity(Request $request){
 
-        $product=ProductsAttribute::where("product_id","$request->product_id")->where("id","=","$request->product_attribute_id")->select("stock")->first();
-        $stock=$product->stock;
-        return response($stock);
+        $product=ProductsAttribute::where("product_id","$request->product_id")->where("id","=","$request->product_attribute_id")->select("stock","price")->first();
+        
+
+        return response($product);
     }
 
 }
