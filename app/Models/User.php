@@ -42,7 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getOrderMemberId(){
-        return $this->hasOne(Orderpeople::class,"user_id");
-    }
+    // public function getOrderMemberId(){
+    //     return $this->hasOne(Orderpeople::class,"user_id");
+    // }
 }

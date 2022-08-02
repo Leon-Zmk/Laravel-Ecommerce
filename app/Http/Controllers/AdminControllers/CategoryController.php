@@ -45,8 +45,11 @@ class CategoryController extends Controller
                     $img=$request->file("image");
     
                     $newName=uniqid()."profile_photo.".$img->extension();
-    
-                    Image::make($img)->save("storage/categories_images/$newName");
+                    
+                    Image::make($img)->save("storage/categories_images/normal/$newName");
+                    Image::make($img)->resize(100,100)->save("storage/categories_images/resize/$newName");
+
+                    
     
                     $category->image=$newName;
     
@@ -76,7 +79,7 @@ class CategoryController extends Controller
        if($request->isMethod("post")){
 
                 $request->validate([
-                    "name"=>"required|max:10",
+                    "name"=>"required|max:20",
                     "category_id"=>"required",
                     "section_id"=>"required|exists:sections,id",
                     "description"=>"nullable",
@@ -102,7 +105,8 @@ class CategoryController extends Controller
     
                     $newName=uniqid()."profile_photo.".$img->extension();
     
-                    Image::make($img)->save("storage/categories_images/$newName");
+                    Image::make($img)->save("storage/categories_images/normal/$newName");
+                    Image::make($img)->resize(100,100)->save("storage/categories_images/resize/$newName");
     
                     $category->image=$newName;
     

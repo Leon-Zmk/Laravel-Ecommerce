@@ -17,7 +17,7 @@ class OrderController extends Controller
         $order->product_attribute_id=$request->product_attribute_id;
         $order->order_quantity=$request->order_quantity;
         $order->is_deliver_status=0;
-        $order->order_member_id=0;
+        $order->order_member_id=auth()->user()->id;
 
         $order->save();
 
@@ -27,7 +27,7 @@ class OrderController extends Controller
 
     public function Cart(){
 
-        $orders=Order::where("order_member_id",auth()->user()->getOrderMemberId->id)->get();
+        $orders=Order::where("order_member_id",auth()->user()->id)->get();
         return view("frontend.cart",compact("orders"));
     }
 

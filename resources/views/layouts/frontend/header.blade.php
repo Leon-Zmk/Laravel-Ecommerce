@@ -14,20 +14,24 @@
                 <div class="d-inline-flex align-items-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+                        @guest
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Sign in</button>
-                            <button class="dropdown-item" type="button">Sign up</button>
+                            <a class="dropdown-item" href="{{route('login')}}">Sign in</a>
+                            <a class="dropdown-item" href="{{route('register')}}">Sign up</a>
                         </div>
+                        @endguest
+
+                        @auth
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{route('login')}}">My Profile</a>
+                                <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
+                            </div>
+
+                             
+                        @endauth
                     </div>
+                    
                     <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">EUR</button>
-                            <button class="dropdown-item" type="button">GBP</button>
-                            <button class="dropdown-item" type="button">CAD</button>
-                        </div>
-                    </div>
-                    <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button">FR</button>

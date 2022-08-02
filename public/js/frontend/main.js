@@ -608,6 +608,29 @@
     }
 
    }
+
+let profileInput=document.getElementById("profileinput");
+let profile=document.getElementById("profile");
+
+
+profile.addEventListener('click',function(){
+    profileInput.click();
+})
+
+
+profileInput.addEventListener("change",function(){
+
+    let img=profileInput.files[0]
+    let reader=new FileReader();
+    reader.addEventListener("load",function(){
+        profile.src=reader.result;
+    })
+    reader.readAsDataURL(img);
+
+})
+
+
+
    
 
   

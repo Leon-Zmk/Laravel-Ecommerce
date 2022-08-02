@@ -30,5 +30,9 @@ class Product extends Model
         return $this->hasMany(ProductsAttribute::class)->select("size");
     }
 
+    public static function productCount($id){
+        return $products=Product::where("category_id","$id")->get();
+    }
+
     
 }

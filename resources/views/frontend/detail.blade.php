@@ -55,7 +55,7 @@
                     <h3>{{$product->name}}</h3>
                     <br>
                     <br>
-                    <h6 class="font-weight-semi-bold mb-4" >Price: <span id="itemprice">{{$product->price}}</span></h6>
+                    <h6 class="font-weight-semi-bold mb-4" >Price: <span id="itemprice">{{$product->price}} MMK</span></h6>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
                         <form id="order" action="{{route("saveorder")}}" method="POST">
@@ -161,7 +161,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href="">{{$producT->name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>{{$producT->price}}</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                            <h6>{{$producT->price}} &nbsp; MMK</h6><h6 class="text-muted ml-2">@if($product->discount==0)   @else <del>{{$product->discount}} MMK</del></h6>    @endif
                         </div>
                        
                     </div>

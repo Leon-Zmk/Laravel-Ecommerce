@@ -40,7 +40,7 @@
                                         <div class="p-3" style="max-width: 700px;">
                                             <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">{{$category->name}}</h1>
                                             <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                                            <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
+                                            <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{{route("specific",$category->id)}}">Shop Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -99,11 +99,11 @@
             <a class="text-decoration-none" href="">
                 <div class="cat-item d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                        <img class="img-fluid" src={{asset("images/frontend_img/img/cat-1.jpg")}} alt="">
+                        <img class="img-fluid" src={{asset("storage/categories_images/resize/$category->image")}} alt="">
                     </div>
                     <div class="flex-fill pl-3">
                         <h6>{{$category->name}}</h6>
-                        <small class="text-body">100 Products</small>
+                        <small class="text-body">{{count(Product::productCount($category->id))}} Product</small>
                     </div>
                 </div>
             </a>
@@ -387,7 +387,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href=""> {{$product->name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$123.00</h5><h6 class="text-muted ml-2">@if($product->discount==0)   @else <del>{{$product->discount}}</del></h6>    @endif
+                            <h6>{{$product->price}} &nbsp; MMK</h6><h6 class="text-muted ml-2">@if($product->discount==0)   @else <del>{{$product->discount}} MMK</del></h6>    @endif
                         </div>
                         
                     </div>
@@ -402,7 +402,12 @@
 
 
     <!-- Vendor Start -->
+
+    
     <div class="container-fluid py-5">
+        
+        <h6 class="text-center ml-5 mb-5">Vendors</h6>
+
         <div class="row px-xl-5">
             @foreach ($vshops as $vshop)
             <div class="col">

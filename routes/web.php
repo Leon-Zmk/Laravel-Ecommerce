@@ -120,6 +120,9 @@ Route::middleware("auth")->group(function(){
     Route::post("/add-cart",[App\Http\Controllers\FrontendControllers\OrderController::class,"saveOrder"])->name("saveorder");
     Route::get("cart",[App\Http\Controllers\FrontendControllers\OrderController::class,"Cart"])->name("cart");
     Route::post("updateCart/",[App\Http\Controllers\FrontendControllers\OrderController::class,"updateCart"])->name("updatecart");
+
+    Route::get("user/profile",[App\Http\Controllers\UserController::class,"Profile"])->name("profile");
+    Route::post("user/update-info",[App\Http\Controllers\UserController::class,"updateInfo"])->name("updateinfo");
 });
 
 
