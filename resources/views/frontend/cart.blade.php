@@ -19,8 +19,11 @@
                     </tr>
                 </thead>
                 <tbody class="align-middle">
+
+                    <input type="text" hidden  id="csrf" value="{{csrf_token()}}">
+
                     
-                    @foreach ($orders as $order)
+                    @forelse ($orders as $order)
 
 
                     <tr order_id="{{$order->id}}" order_stock="{{$order->getAttri->stock}}" order_price="{{$order->getAttri->price}}">
@@ -42,7 +45,6 @@
                                 </div>
                                 <input type="number" class="form-control form-control-sm bg-secondary border-0 text-center quantityinput" input_id="{{$order->id}}" id="quantityinput{{$order->id}}"  value="{{$order->order_quantity}}" >
                                 
-                               
 
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary  btn-plus{{$order->id}}">
@@ -51,10 +53,19 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle" class="totalPrice" id="totalPrice{{$order->id}}">{{$order->getAttri->price * $order->order_quantity}}</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+                        <td class="align-middle totalPrice" id="totalPrice{{$order->id}}">{{$order->getAttri->price * $order->order_quantity}}</td>
+                        <input type="text" hidden  name="url" id="url" value="{{route("deleteorder")}}">
+                        <td class="align-middle"><button class="btn btn-sm btn-danger" form="cartdel{{$order->id}}"><i class="fa fa-times"></i></button></td>
+
+                        <form action="{{route("deleteorder")}}" id="cartdel{{$order->id}}" method="POST">
+                            @csrf
+                            <input type="text" hidden name="orderid" value="{{$order->id}}">
+                        </form>
                     </tr>
-                    @endforeach
+                        @empty
+                            
+                       
+                    @endforelse
                   
                 </tbody>
             </table>
@@ -67,19 +78,125 @@
                 <div class="border-bottom pb-2">
                     <div class="d-flex justify-content-between mb-3">
                         <h6>Subtotal</h6>
-                        <h6>$150</h6>
+                        <h6 id="itemtotal">{{App\Models\Order::getPrice()}}</h6>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium" >Shipping</h6>
+                        <h6 class="font-weight-medium" id="shipping">  @if(!empty($orders)) {{$order->getProduct->shipping_fee}} @else 0  @endif</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5>$160</h5>
+                        <h5 id="alltotal">@if(!empty($orders)) {{App\Models\Order::getPrice()+ $order->getProduct->shipping_fee}} @else @endif</h5>
+
+
+
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Order</button>
+                    <br>
+                   <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Proceed To Order
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route("purchase")}}" id="orderform" method="post">
+                @csrf
+                <input type="text" hidden name="shipping_fee" value=@if(!empty($orders)){{$order->getProduct->shipping_fee}} @else @endif> 
+                <input type="text" hidden class="itemtotal"  name="sub_total" value="{{App\Models\Order::getPrice()}}"> 
+                <input type="text" hidden class="alltotal"  name="all_total" value=@if(!empty($orders)){{ App\Models\Order::getPrice()+ $order->getProduct->shipping_fee }} @else @endif> 
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Name</label>
+                  <input type="text" name="name" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Phone</label>
+                  <input type="text" name="phone" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Email</label>
+                  <input type="text" name="email" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Region</label>
+                    <input type="text" name="region" class="form-control" id="recipient-name">
+                  </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">City</label>
+                  <input type="text" name="city" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Township</label>
+                    <input type="text" name="township" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Building No (Or) LandMark</label>
+                    <input type="text" name="building_no" class="form-control" id="recipient-name">
+                  </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Address</label>
+                  <textarea class="form-control" name="address" id="message-text"></textarea>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" form="orderform" class="btn btn-primary">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                    
+                    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Your Address And Info</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Phone</label>
+                                <input type="text" name="phone" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Email</label>
+                                <input type="text" name="email" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">City</label>
+                                <input type="text" name="city" class="form-control" id="recipient-name">
+                              </div>
+                              <div class="form-group">
+                                <label for="message-text" class="col-form-label">Address</label>
+                                <textarea class="form-control" name="address" id="message-text"></textarea>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Order</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

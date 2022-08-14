@@ -123,6 +123,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                              <label for="shipping_fee">Shipping Fee</label>
+                              <input type="text" name="shipping_fee" id="shipping_fee" class="  form-control">
+                              @error('shipping_fee')
+                                  <span class="text-danger">{{$message}}</span>
+                              @enderror
+                          </div>
+                            <div class="form-group">
                                 <label for="discount">Discount</label>
                                 <input type="text" name="discount" id="discount" class="  form-control">
                                 @error('discount')

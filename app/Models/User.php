@@ -45,4 +45,9 @@ class User extends Authenticatable
     // public function getOrderMemberId(){
     //     return $this->hasOne(Orderpeople::class,"user_id");
     // }
+
+
+    public function getBuyerId(){
+        return $this->hasOne(Buyer::class,"user_id");
+    }
 }

@@ -261,8 +261,8 @@
         
                 if(newVal >= quantity){
                     
-                    $(".quantity button").parent().parent().find('input').prop("disabled",true);
                     plusBtn.prop("disabled",true)
+                    var newVal=quantity;
                 }
                 
                 
@@ -379,14 +379,52 @@
                  }
     
     
-             
+                 
     
                 if(newVal >= order_quantity){
     
                     $(this).parent().parent().find('input').val(order_quantity);
                     $("#totalPrice"+currentTr).html(newVal * order_price);
+
+                    $("#totalPrice"+currentTr).html(newVal * order_price);
+
+                    $("#totalPrice"+currentTr).html(newVal * order_price);
+
+                    let itemtotalpricearray=[]
+                    let tprices=document.querySelectorAll(".totalPrice")
+                    for(let i=0;i<tprices.length;i++){
+
+                       
+                           if(tprices.length==1){
+
+                            $("#itemtotal").html(tprices[i].innerHTML)
+                            $(".itemtotal").val(tprices[i].innerHTML)
+                            $("#alltotal").html(tprices[i].innerHTML);
+                            $(".alltotal").val(tprices[i].innerHTML);
+
+
+                           }else{
+
+                            itemtotalpricearray.push(tprices[i].innerHTML)
+
+                            console.log(itemtotalpricearray);
+                            $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                            $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+                            let itemtotalprice=$("#itemtotal").html();
+                            let shippingprice=$("#shipping").html();
+
+                            $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                            $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+                           }
+                       
+                        
+
+                    }
                     plusBtn.prop("disabled",true)
 
+                    let totalitemfee= $("#totalPrice"+currentTr).html();
 
                     $.ajax({
                         method:"post",
@@ -407,6 +445,12 @@
     
                 }else{
 
+                  
+
+                    $("#totalPrice"+currentTr).html(newVal * order_price);
+
+                    let totalitemfee= $("#totalPrice"+currentTr).html();
+
                     $.ajax({
                         method:"post",
                         url:url,
@@ -424,7 +468,40 @@
                         
                     })
 
-                    $("#totalPrice"+currentTr).html(newVal * order_price);
+                    let itemtotalpricearray=[]
+
+                    let tprices=document.querySelectorAll(".totalPrice")
+                    for(let i=0;i<tprices.length;i++){
+
+                       
+                           if(tprices.length==1){
+
+                            $("#itemtotal").html(tprices[i].innerHTML)
+                            $(".itemtotal").val(tprices[i].innerHTML)
+                            $("#alltotal").html(tprices[i].innerHTML);
+                            $(".alltotal").val(tprices[i].innerHTML);
+
+
+                           }else{
+
+                            itemtotalpricearray.push(tprices[i].innerHTML)
+
+                            console.log(itemtotalpricearray);
+                            $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                            $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+                            let itemtotalprice=$("#itemtotal").html();
+                            let shippingprice=$("#shipping").html();
+
+                            $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                            $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+
+                           }
+                       
+                        
+
+                    }
                 }
 
                
@@ -447,6 +524,44 @@
     
                 
                 $("#totalPrice"+currentTr).html(newVal * order_price);
+
+                let itemtotalpricearray=[]
+
+                let tprices=document.querySelectorAll(".totalPrice")
+                for(let i=0;i<tprices.length;i++){
+
+                   
+                       if(tprices.length==1){
+
+                        $("#itemtotal").html(tprices[i].innerHTML)
+                        $(".itemtotal").val(tprices[i].innerHTML)
+                        $("#alltotal").html(tprices[i].innerHTML);
+                        $(".alltotal").val(tprices[i].innerHTML);
+
+
+                       }else{
+
+                        itemtotalpricearray.push(tprices[i].innerHTML)
+
+                        console.log(itemtotalpricearray);
+                        $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                        $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+
+                        let itemtotalprice=$("#itemtotal").html();
+                        let shippingprice=$("#shipping").html();
+
+                        $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                        $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+
+                       }
+                   
+                    
+
+                }
+
+                let totalitemfee= $("#totalPrice"+currentTr).html();
     
                 $.ajax({
                     method:"post",
@@ -472,12 +587,15 @@
 
 
     
-  
+       
 
 
 
     for(let i=0;i < inputs.length;i++){
         inputs[i].addEventListener("keyup",function(event){
+
+
+            
 
             var pressed=false;
 
@@ -486,6 +604,8 @@
                     pressed=true;
                 }
             })
+
+
 
             window.addEventListener("keyup",function(){
                 pressed=false
@@ -496,7 +616,7 @@
             let order_price=$(this).parent().parent().parent().attr("order_price");
             let order_quantity=$(this).parent().parent().parent().attr("order_stock");
             let url=$("#url").val();
-              
+
             
             if(event.which != 8 && isNaN(String.fromCharCode(event.which))){
                 
@@ -508,12 +628,202 @@
          
                  
                  
-             }else{
+             }else{ 
+
+
+            
+                
 
                     if(Number(input_quantity) <= Number(order_quantity)){
-                
+
+
+
+                        // here can insert fail code blur that i remove
+                                                                                                                                                                                                                        
+                    
+
+                      inputs[i].addEventListener("blur",  function() { 
+                    if($(this).val()){
+
+                                        let newValue=$(this).val();
+
+                                        
+                                        
+                                        $(this).parent().parent().next().html($(this).val() * order_price);
+
+
+                                        
+                                        $(this).val(newValue)
+                                    $(this).parent().parent().next().html($(this).val() * order_price);
+
+
+                                    let itemtotalpricearray=[]
+
+                                    let tprices=document.querySelectorAll(".totalPrice")
+                                    for(let i=0;i<tprices.length;i++){
+
+                                        
+                                            if(tprices.length==1){
+
+                                            $("#itemtotal").html(tprices[i].innerHTML)
+                                            $(".itemtotal").val(tprices[i].innerHTML)
+                                            $("#alltotal").html(tprices[i].innerHTML);
+                                            $(".alltotal").val(tprices[i].innerHTML);
+
+
+                                            }else{
+
+                                            itemtotalpricearray.push(tprices[i].innerHTML)
+
+                                            console.log(itemtotalpricearray);
+                                            $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                                            $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+
+                                            let itemtotalprice=$("#itemtotal").html();
+                                            let shippingprice=$("#shipping").html();
+
+                                            $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                                            $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+
+                                            }
+                                        
+                                        
+
+                                    }
+
+
+                        $.ajax({
+                        method:"post",
+                        url:url,
+                        data:{
+                            order_id:order_id,
+                            newVal:newValue,
+                            "_token":$("#csrf").val(),
+                        },
+
+                        success:function(response){
+                            
+                            
+
+                        }    
+                        
+                    })
+                    }else{
+                                        let newValue= 1;
+
+                                        
+                                        $(this).parent().parent().next().html($(this).val() * order_price);
+
+
+                                        
+                                        $(this).val(1)
+                                    $(this).parent().parent().next().html($(this).val() * order_price);
+
+
+                                    let itemtotalpricearray=[]
+
+                                    let tprices=document.querySelectorAll(".totalPrice")
+                                    for(let i=0;i<tprices.length;i++){
+
+                                        
+                                            if(tprices.length==1){
+
+                                            $("#itemtotal").html(tprices[i].innerHTML)
+                                            $(".itemtotal").val(tprices[i].innerHTML)
+
+                                            }else{
+
+                                            itemtotalpricearray.push(tprices[i].innerHTML)
+
+                                            console.log(itemtotalpricearray);
+                                            $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                                            $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+
+                                            let itemtotalprice=$("#itemtotal").html();
+                                            let shippingprice=$("#shipping").html();
+
+                                            $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                                            $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+
+                                            }
+                                        
+                                        
+
+                                    }
+
+
+                        $.ajax({
+                        method:"post",
+                        url:url,
+                        data:{
+                            order_id:order_id,
+                            newVal:newValue,
+                            "_token":$("#csrf").val(),
+                        },
+
+                        success:function(response){
+                            
+                            
+
+                        }    
+                        
+                    })
+                    }
+
+
+});
+
+   
+
+
+
+
+ 
+
+
+
+
+
+                     
                         
                         $(this).parent().parent().next().html(input_quantity * order_price);
+
+                        let itemtotalpricearray=[]
+
+                        let tprices=document.querySelectorAll(".totalPrice")
+                        for(let i=0;i<tprices.length;i++){
+    
+                           
+                               if(tprices.length==1){
+    
+                                $("#itemtotal").html(tprices[i].innerHTML)
+                                $(".itemtotal").val(tprices[i].innerHTML)
+    
+                               }else{
+    
+                                itemtotalpricearray.push(tprices[i].innerHTML)
+    
+                                console.log(itemtotalpricearray);
+                                $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                                $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+
+                                let itemtotalprice=$("#itemtotal").html();
+                                let shippingprice=$("#shipping").html();
+    
+                                $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                                $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+    
+                               }
+                           
+                            
+    
+                        }
 
                         $.ajax({
                             method:"post",
@@ -538,6 +848,39 @@
 
                              $(this).val(order_quantity)
                              $(this).parent().parent().next().html($(this).val() * order_price);
+
+
+                             let itemtotalpricearray=[]
+
+                             let tprices=document.querySelectorAll(".totalPrice")
+                             for(let i=0;i<tprices.length;i++){
+         
+                                
+                                    if(tprices.length==1){
+         
+                                     $("#itemtotal").html(tprices[i].innerHTML)
+                                     $(".itemtotal").val(tprices[i].innerHTML)
+         
+                                    }else{
+         
+                                     itemtotalpricearray.push(tprices[i].innerHTML)
+         
+                                     console.log(itemtotalpricearray);
+                                     $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                                     $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+
+                                     let itemtotalprice=$("#itemtotal").html();
+                                     let shippingprice=$("#shipping").html();
+         
+                                     $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                                     $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+                                    }
+                                
+                                 
+         
+                             }
                              $(".btn-plus"+order_id).prop("disabled",true);
 
 
@@ -568,6 +911,39 @@
                             $(this).parent().parent().next().html($(this).val() * order_price);
 
 
+                            let itemtotalpricearray=[]
+
+                            let tprices=document.querySelectorAll(".totalPrice")
+                            for(let i=0;i<tprices.length;i++){
+        
+                               
+                                   if(tprices.length==1){
+        
+                                    $("#itemtotal").html(tprices[i].innerHTML)
+                                    $(".itemtotal").val(tprices[i].innerHTML)
+        
+                                   }else{
+        
+                                    itemtotalpricearray.push(tprices[i].innerHTML)
+        
+                                    console.log(itemtotalpricearray);
+                                    $("#itemtotal").html(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+                                    $(".itemtotal").val(itemtotalpricearray.reduce((s,l) => Number(s)+Number(l)))
+
+                                    let itemtotalprice=$("#itemtotal").html();
+                                    let shippingprice=$("#shipping").html();
+        
+                                    $("#alltotal").html(Number(itemtotalprice)+Number(shippingprice));
+                                    $(".alltotal").val(Number(itemtotalprice)+Number(shippingprice));
+
+        
+                                   }
+                               
+                                
+        
+                            }
+
+
                              $.ajax({
                                 method:"post",
                                 url:url,
@@ -586,6 +962,11 @@
                             })
          
                          }
+                         else if(input_quantity.length){
+
+                            
+        
+                        }
                          else if(Number(input_quantity) < Number(order_quantity)){
         
                             $(".btn-plus"+order_id).prop("disabled",false);
@@ -607,40 +988,44 @@
         })
     }
 
+ 
+    
+
    }
 
-let profileInput=document.getElementById("profileinput");
-let profile=document.getElementById("profile");
+
+// let profileInput=document.getElementById("profileinput");
+// let profile=document.getElementById("profile");
 
 
-profile.addEventListener('click',function(){
-    profileInput.click();
-})
+// profile.addEventListener('click',function(){
+//     profileInput.click();
+// })
 
 
-profileInput.addEventListener("change",function(){
+// profileInput.addEventListener("change",function(){
 
-    let img=profileInput.files[0]
-    let reader=new FileReader();
-    reader.addEventListener("load",function(){
-        profile.src=reader.result;
-    })
-    reader.readAsDataURL(img);
+//     let img=profileInput.files[0]
+//     let reader=new FileReader();
+//     reader.addEventListener("load",function(){
+//         profile.src=reader.result;
+//     })
+//     reader.readAsDataURL(img);
 
-})
+// })
+
+
+
+
 
 
 
    
 
+
+
+// fail code blur
   
-   
-
-
-
-
- 
-
 
 
 

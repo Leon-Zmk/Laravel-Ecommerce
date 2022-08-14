@@ -49,6 +49,8 @@ Route::prefix("/admin")->group(function(){
         Route::post("/management/status",[App\Http\Controllers\AdminControllers\AdminController::class,"status"])->name("manageStatus");
         Route::get("/management/{id?}/detail",[App\Http\Controllers\AdminControllers\AdminController::class,"detail"])->name("managementDetail");
 
+        Route::get("/management/manage/users",[App\Http\Controllers\AdminControllers\AdminController::class,"users"])->name("users");
+
 
         //catalogue 
 
@@ -96,6 +98,12 @@ Route::prefix("/admin")->group(function(){
         Route::post("/management/catalogue/delete/images/",[App\Http\Controllers\AdminControllers\ProductController::class,"imageDelete"])->name("imagedelete");
 
 
+        Route::get("/management/orders/orders",[App\Http\Controllers\AdminControllers\AdminController::class,"orders"])->name("orders");
+
+        Route::get("/management/orders/buyers",[App\Http\Controllers\AdminControllers\AdminController::class,"Buyers"])->name("buyers");
+
+
+
         
 
 
@@ -123,6 +131,11 @@ Route::middleware("auth")->group(function(){
 
     Route::get("user/profile",[App\Http\Controllers\UserController::class,"Profile"])->name("profile");
     Route::post("user/update-info",[App\Http\Controllers\UserController::class,"updateInfo"])->name("updateinfo");
+
+    Route::post("cart/delete",[App\Http\Controllers\FrontendControllers\OrderController::class,"deleteorder"])->name("deleteorder");
+
+    Route::post("cart/purchase",[App\Http\Controllers\FrontendControllers\OrderController::class,"Purchase"])->name("purchase");
+
 });
 
 
@@ -136,6 +149,8 @@ Route::post("/gsq",[App\Http\Controllers\FrontendControllers\IndexController::cl
 
 Route::get("/vendors",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendors"])->name("vendors");
 Route::get("/vendor/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendorDetail"])->name("vendordetail");
+
+
 
 
 

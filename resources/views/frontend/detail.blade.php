@@ -55,7 +55,9 @@
                     <h3>{{$product->name}}</h3>
                     <br>
                     <br>
-                    <h6 class="font-weight-semi-bold mb-4" >Price: <span id="itemprice">{{$product->price}} MMK</span></h6>
+                    <h6 class="font-weight-semi-bold mb-4" ><i class="fas fa-money-bill"></i>&nbsp;<span id="itemprice">{{$product->price}} MMK</span></h6>
+                    <h6 class="font-weight-semi-bold mb-4" >@if($product->shipping_fee) Shipping:<span id="itemprice">{{$product->shipping_fee}} MMK</span></h6> @else Shipping: Free</span></h6>   @endif
+
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
                         <form id="order" action="{{route("saveorder")}}" method="POST">
@@ -66,6 +68,7 @@
                                 <input type="text" hidden id="product_id" name="product_id" value="{{$product->id}}">
                                 <input type="text" hidden id="quantity_url" value="{{route("getsizequantity")}}">
                                 <input type="text" hidden id="csrf" value="{{csrf_token()}}">
+                                <input type="text" hidden id="itemprice" name="item_price" value="{{$attribute->price}}">
                                 <input type="radio" form="order"  class="custom-control-input size-radio"  value="{{$attribute->id}}" id="{{$attribute->id}}" name="product_attribute_id">
                                 <label class="custom-control-label" for="{{$attribute->id}}">{{$attribute->size}}</label>
                             </div>

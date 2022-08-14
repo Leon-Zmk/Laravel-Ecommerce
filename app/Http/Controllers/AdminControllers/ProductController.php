@@ -34,6 +34,7 @@ class ProductController extends Controller
                 "category_id"=>"required|exists:categories,id",
                 "brand_id"=>"required|exists:brands,id",
                 "price"=>"required|numeric",
+                "shipping_fee"=>"nullable|numeric",
                 "discount"=>"nullable|numeric",
                 "description"=>"required|max:400",
                 "code"=>"required|min:4|max:10",
@@ -62,6 +63,7 @@ class ProductController extends Controller
             $product->color=$request->color;
             $product->code=$request->code;
             $product->price=$request->price;
+            $product->shipping_fee=$request->shipping_fee;
             $product->discount=$request->discount;
             $product->description=$request->description;
 

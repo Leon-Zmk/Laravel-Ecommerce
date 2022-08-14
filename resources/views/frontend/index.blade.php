@@ -387,7 +387,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href=""> {{$product->name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h6>{{$product->price}} &nbsp; MMK</h6><h6 class="text-muted ml-2">@if($product->discount==0)   @else <del>{{$product->discount}} MMK</del></h6>    @endif
+                            <h6>{{$product->price}} &nbsp; MMK</h6><h6 class="text-muted ml-2">@if($product->discount)   @else <del>{{$product->discount}} MMK</del></h6>    @endif
                         </div>
                         
                     </div>

@@ -15,6 +15,20 @@ class Order extends Model
     }
 
     public function getProduct(){
-        return $this->belongsTo(Product::class,"product_id")->select("name","id");
+        return $this->belongsTo(Product::class,"product_id")->select("name","id","shipping_fee");
     }
+
+    public static function getPrice(){
+        
+        $totalprice=Order::where("order_member_id",auth()->user()->id)->get()->sum("item_total_fee");
+     
+        
+       return $totalprice;
+    }
+
+
+  public function getBuyers(){
+
+    return $this->belongsTo(Buyer::class,"order_member_id");
+  }
 }

@@ -44,6 +44,7 @@
   <!-- JavaScript Libraries -->
   <script src={{asset("js/frontend/jquery.min.js")}}></script>
   <script src={{asset("js/frontend/jquery_ajax.js")}}></script>
+  <script src={{asset("js/frontend/bootstrap.min.js")}}></script>
   <script src={{asset("js/frontend/bootstrap.bundle.min.js")}}></script>
   <script src={{asset("frontend_plugins/lib/easing/easing.min.js")}}></script>
   <script src={{asset("frontend_plugins/lib/owlcarousel/owl.carousel.min.js")}}></script>

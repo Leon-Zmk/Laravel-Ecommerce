@@ -34,5 +34,9 @@ class Product extends Model
         return $products=Product::where("category_id","$id")->get();
     }
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
     
 }

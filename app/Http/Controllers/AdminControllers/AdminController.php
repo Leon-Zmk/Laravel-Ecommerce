@@ -5,6 +5,9 @@ namespace App\Http\Controllers\AdminControllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Vshop;
 use Illuminate\Support\Facades\Auth;
@@ -371,6 +374,13 @@ class AdminController extends Controller
         return view("admin.userManagement.admins",compact("type","usersdetail"));
     }
 
+    public function users(){
+
+        $users=User::all();
+        return view("admin.userManagement.users",compact("users"));
+
+    }
+
     public function detail($id=null){
 
         if(!empty($id)){
@@ -400,6 +410,26 @@ class AdminController extends Controller
     }
 
     /////end management section
+
+    // start order Management 
+
+    public function orders(){
+
+        
+        $oders=Product::where("admin_id",auth()->guard("admin")->user()->id)->with("orders")->get();
+        return view("admin.Order.orders",compact("oders"));
+
+    }
+
+    public function Buyers(){
+
+        $oders=Product::where("admin_id",auth()->guard("admin")->user()->id)->with("orders")->get();
+
+        return view("admin.Order.buyers",compact("oders"));
+    }
+
+
+    // end order Management
 
     public function logout(){
          Auth::guard("admin")->logout();
