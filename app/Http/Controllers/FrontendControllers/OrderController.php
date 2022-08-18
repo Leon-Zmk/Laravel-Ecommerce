@@ -73,6 +73,7 @@ class OrderController extends Controller
         $buyer=new Buyer();
 
         $buyer->user_id=auth()->user()->id;
+        $buyer->target_product_owner_id=$request->owner_id;
         $buyer->name=$request->name;
         $buyer->phone=$request->phone;
         $buyer->email=$request->email;
@@ -85,16 +86,26 @@ class OrderController extends Controller
         $buyer->all_total=$request->all_total;
         $buyer->address=$request->address;
 
+
+
         $buyer->save();
+
+
+       
 
         $orders=Order::where("order_member_id",auth()->user()->id)->where("is_pending","!=","1")->get();
 
-
-        foreach ($orders as $key => $order) {
-            
+        foreach($orders as $order){
+            $order->order_member_id=$buyer->id;
             $order->is_pending=1;
             $order->save();
         }
+
+        // foreach ($orders as $key => $order) {
+            
+        //     $order->is_pending=1;
+        //     $order->save();
+        // }
         
 
         return redirect()->back();

@@ -94,11 +94,39 @@
                             <td>{{$norder->getAttri->price}}</td>
                             <td>{{$norder->item_total_fee}}</td>
                             <td>@if($norder->is_pending == 0) <span class="text-success text-bold">Pending</span> @else <span class="text-success text-bold">Purchased</span>  @endif </td>
-                            <td>@if($norder->is_delivered == 0) <span class=" text-danger text-bold">No</span> @else <span class="text-success text-bold">Yes</span>  @endif </td>
                             <td>
-                                info
+                                {{-- @if($norder->is_delivered == 0) <span class=" text-danger text-bold">No</span> @else <span class="text-success text-bold">Yes</span>  @endif  --}}
+
+                                @if ($norder->is_deliver_status==0)
+                                <a  class="ordertoggleStatus" id="order-id-{{$norder->id}}" href="javascript:void(0)" order_id="{{$norder->id}}" >
+                                  <i class="fas fa-toggle-off text-black" status="inactive"></i>
+                                  <p id="status-text-{{$norder->id}} " class="text-danger text-bold">Not Deliver</p>
+                                </a>
+                              @else 
+                              <a  class="ordertoggleStatus" id="order-id-{{$norder->id}}" href="javascript:void(0)" order_id="{{$norder->id}}">
+                                  <i class="fas fa-toggle-on text-success" status="active"></i>
+                                  <p id="status-text-{{$norder->id}} " class="text-success text-bold">Delivered</p>
+
+                                </a>
+                                @endif
+
                             </td>
-                            <td>Control</td>
+                            <td>
+                                @if($norder->is_pending == 0) <span class="text-success text-bold">Pending ( In Cart )</span> @else <span class="text-success text-bold">Buyer No - {{$norder->order_member_id}}</span>  @endif 
+                            </td>
+                            <td>
+                                <form action="{{route('orderdelete')}}" method="POST">
+
+                                    @csrf
+
+                                    <input type="text" hidden name="order_id" value="{{$norder->id}}">
+
+                                    <button class="btn btn-outline-danger"  onclick="return confirm('Are you sure to Delete')">
+                                        Delete Order
+                                    </button>
+
+                                </form>
+                            </td>
                           
                         </tr>
 

@@ -65,18 +65,20 @@
                 <!-- Color End -->
         
                 <!-- Size Start -->
-                @if (!$sizes->isEmpty())
+                @if (!$products->isEmpty())
                     
                
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
-                        @foreach ($sizes as $key=>$size)
+                       
+                            @foreach($productSizes as $size)
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox"  class="custom-control-input size " value="{{$size->filter_name}}" name="sizefilter[]"  id="{{"size-all-".$size->id}}">
-                                <label class="custom-control-label" for="{{"size-all-".$size->id}}">{{$size->filter_name}}</label>
+                                <input type="checkbox"  class="custom-control-input form-control size " value="{{$size}}" name="sizefilter[]"  id="{{"size-all-".$size}}">
+                                <label class="custom-control-label" for="{{"size-all-".$size}}">{{$size}}</label>
                             </div>
-                        @endforeach
+                            @endforeach
+                      
                     </form>
                 </div>
         

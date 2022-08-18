@@ -154,7 +154,9 @@
                                     <a href="{{route("cart")}}" class="dropdown-item">Shopping Cart</a>
                                 </div>
                             </div>
+                            <a href="{{route("sellerintro")}}" class="nav-item nav-link">Register As Seller</a>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">

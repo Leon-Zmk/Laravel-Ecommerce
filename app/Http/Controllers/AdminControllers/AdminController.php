@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminControllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Buyer;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -12,7 +13,7 @@ use App\Models\Vendor;
 use App\Models\Vshop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\Facades\Image as FacadesImage;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 use Image;
 
 class AdminController extends Controller
@@ -121,7 +122,7 @@ class AdminController extends Controller
             return redirect()->back()->with("success_message","Shop details Register Successfully");
         
         }
-        return view("vendors.register_shop");
+      
     }
 
     public function login(Request $request){
@@ -417,15 +418,91 @@ class AdminController extends Controller
 
         
         $oders=Product::where("admin_id",auth()->guard("admin")->user()->id)->with("orders")->get();
+
+
         return view("admin.Order.orders",compact("oders"));
 
     }
 
     public function Buyers(){
 
-        $oders=Product::where("admin_id",auth()->guard("admin")->user()->id)->with("orders")->get();
+        $buyers=Buyer::where("target_product_owner_id",auth()->guard('admin')->user()->id)->get();
 
-        return view("admin.Order.buyers",compact("oders"));
+        return view("admin.Order.buyers",compact("buyers"));
+    }
+
+
+    public function updateOrderStatus(Request $request){
+
+        $order=Order::find($request->order_id);
+
+
+       
+
+        if($request->status=="active"){
+            $order->is_deliver_status=0;
+        }
+        else{
+            $order->is_deliver_status=1;
+        }
+
+        $order->update();
+
+        return response($order->is_deliver_status);
+    }
+
+    public function updateBuyerStatus(Request $request){
+
+        $buyer=Buyer::find($request->buyer_id);
+
+
+        if($request->status=="active"){
+            $buyer->is_delivered=0;
+        }
+        else{
+            $buyer->is_delivered=1;
+        }
+
+        $buyer->update();
+
+        return response($buyer->is_delivered);
+    }
+
+    public function deleteOrder(Request $request){
+
+        
+        $order=Order::find($request->order_id);
+        $product=$order->getProduct;
+
+        if( $this->authorize("deleteOrder",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
+
+        $order->delete();
+
+        return redirect()->back();
+
+    }
+
+    public function deleteBuyer(Request $request){
+
+        $buyer=Buyer::find($request->buyer_id);
+        
+        if( $this->authorize("deleteBuyer",$buyer)){
+        
+        }else{
+            abort(403);
+        }
+ 
+
+
+        $buyer->delete();
+
+        return redirect()->back();
+
     }
 
 

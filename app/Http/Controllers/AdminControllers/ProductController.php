@@ -11,8 +11,12 @@ use App\Models\ProductAttribute;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsImage;
 use App\Models\Section;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Cache\RedisTaggedCache;
+use Illuminate\Contracts\Auth\Access\Gate as AccessGate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -20,7 +24,7 @@ class ProductController extends Controller
 {
     public function products(){
 
-        $products=Product::all();
+        $products=Product::where("admin_id",auth()->guard('admin')->user()->id)->get();
         return view("admin.catalogue.products",compact("products"));
     }
 
@@ -96,6 +100,14 @@ class ProductController extends Controller
     public function productStatus(Request $request){
 
         $product=Product::find($request->product_id);
+
+        if( $this->authorize("update",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
+
         if($request->status=="active"){
             $product->status=0;
         }
@@ -109,6 +121,15 @@ class ProductController extends Controller
     }
 
     public function update(Request $request,$id=null){
+
+        $product=Product::find($id);
+
+        
+       if( $this->authorize("update",$product)){
+        
+       }else{
+           abort(403);
+       }
 
         if($request->isMethod("POST")){
 
@@ -126,7 +147,6 @@ class ProductController extends Controller
 
             $findcategory=Category::find($request->category_id);
             $getsection=Section::find($findcategory->section_id);
-            $product=Product::find($id);
 
             $product->name=$request->name;
             $product->category_id=$request->category_id;
@@ -186,7 +206,16 @@ class ProductController extends Controller
     public function deleteProduct(Request $request,$id){
         
         if($id){
+            
             $product=Product::find($request->id);
+
+            if( $this->authorize("deleteProduct",$product)){
+        
+            }else{
+                abort(403);
+            }
+     
+
 
             if(!empty($product->image)){
                 Storage::delete("public/frontend/products/small/".$product->image);
@@ -206,7 +235,18 @@ class ProductController extends Controller
         
         $product=Product::select("id","price","name","color","image","code")->with("attributes")->find($id);
 
+        
+      
+ 
         if($request->isMethod("post")){
+
+            $pproduct=Product::find($request->product_id);
+
+            if( $this->authorize("addAttributes",$pproduct)){
+        
+            }else{
+                abort(403);
+            }
 
             $request->validate([
                 "sizes.*"=>"required|max:10",
@@ -243,7 +283,19 @@ class ProductController extends Controller
 
     public function status(Request $request){
 
+
+
         $attribute=ProductsAttribute::find($request->attribute_id);
+        $product= $attribute->getProduct;
+
+        if( $this->authorize("status",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
+
+        
         if($request->status=="active"){
             $attribute->status=0;
         }
@@ -264,6 +316,7 @@ class ProductController extends Controller
         
         $attributesid=$request->attributesid;
 
+
         foreach ($attributesid as $key => $value) {
 
             $request->validate([
@@ -272,6 +325,15 @@ class ProductController extends Controller
             ]);
 
             $attribute=ProductsAttribute::where("id","$value")->first();
+            $product=$attribute->getProduct;
+
+            if( $this->authorize("updateAttribute",$product)){
+        
+            }else{
+                abort(403);
+            }
+     
+
             $attribute->price=$request->uprices[$key];
             $attribute->stock=$request->ustocks[$key];
 
@@ -301,8 +363,14 @@ class ProductController extends Controller
 
      public function addImages(Request $request,$id=null){
         
-        $product=Product::select("id","price","name","color","image","code")->with("images")->find($id);
+        $product=Product::select("id","price","name","admin_id","color","image","code")->with("images")->find($id);
 
+        if( $this->authorize("addImages",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
         if($request->isMethod("POST")){
 
             $request->validate([
@@ -347,6 +415,15 @@ class ProductController extends Controller
      public function imageStatus(Request $request){
 
         $image=ProductsImage::find($request->image_id);
+        $product=$image->getProduct;
+
+        if( $this->authorize("imageStatus",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
+
         if($request->status=="active"){
             $image->status=0;
         }
@@ -367,9 +444,26 @@ class ProductController extends Controller
             "imageid"=>"required|exists:products_images,id",
         ]);
 
-        $id=$request->imageid;
+        //get Image;
 
+        $id=$request->imageid;
         $image=ProductsImage::find($id);
+
+        //
+
+        //Get Product
+
+        $product=$image->getProduct;
+
+        //
+
+        if( $this->authorize("imageDelete",$product)){
+        
+        }else{
+            abort(403);
+        }
+ 
+        
 
 
             Storage::delete("public/frontend/products/small/".$image->name);

@@ -120,7 +120,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{route("orders")}}" class="nav-link">
+                <a href="{{route("buyers")}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Show Buyers </p>
                 </a>
@@ -169,7 +169,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route("management","Admins")}}" class="nav-link">
+                <a href="{{route("management","Admin")}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Admin </p>
                 </a>

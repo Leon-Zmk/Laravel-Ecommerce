@@ -15,7 +15,7 @@ class Order extends Model
     }
 
     public function getProduct(){
-        return $this->belongsTo(Product::class,"product_id")->select("name","id","shipping_fee");
+        return $this->belongsTo(Product::class,"product_id")->select("name","id","shipping_fee","admin_id");
     }
 
     public static function getPrice(){
@@ -27,8 +27,5 @@ class Order extends Model
     }
 
 
-  public function getBuyers(){
 
-    return $this->belongsTo(Buyer::class,"order_member_id");
-  }
 }

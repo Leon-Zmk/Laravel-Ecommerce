@@ -9,6 +9,7 @@ use App\Models\Filter;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\Vshop;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class IndexController extends Controller
 {
@@ -61,6 +62,34 @@ class IndexController extends Controller
                 $products=Product::where("category_id","$category")->whereIn("id",$filtersizeproducts)->get();
                 
             }
+
+            if(request()->brand && request()->color ){
+
+                $filtersizeproducts=ProductsAttribute::where("size",request()->size)->select("product_id")->get();
+                $products=Product::where("category_id","$category")->whereIn("brand_id",request()->brand)->whereIn("color",request()->color)->get();
+
+            }
+
+            if(request()->brand && request()->size ){
+
+                $filtersizeproducts=ProductsAttribute::where("size",request()->size)->select("product_id")->get();
+                $products=Product::where("category_id","$category")->whereIn("brand_id",request()->brand)->whereIn("id",$filtersizeproducts)->get();
+
+            }
+
+            if(request()->color && request()->size ){
+
+                $filtersizeproducts=ProductsAttribute::where("size",request()->size)->select("product_id")->get();
+                $products=Product::where("category_id","$category")->whereIn("color",request()->color)->whereIn("id",$filtersizeproducts)->get();
+
+            }
+
+            if(request()->brand && request()->color && request()->size ){
+
+                $filtersizeproducts=ProductsAttribute::where("size",request()->size)->select("product_id")->get();
+                $products=Product::where("category_id","$category")->whereIn("brand_id",request()->brand)->whereIn("color",request()->color)->whereIn("id",$filtersizeproducts)->get();
+
+            }
             
             
 
@@ -70,15 +99,23 @@ class IndexController extends Controller
 
             $category=$category;
             $products=Product::where("category_id","$category")->get();
+            $getproductIds=Product::where("category_id","$category")->select("id")->get();
+            $productIds=[];
+
             $brands_id=Product::where("category_id","$category")->get()->pluck("brand_id")->unique();
             $brands=Brand::whereIn("id",$brands_id)->select("id","name")->get();
 
             $colors=Product::where("category_id","$category")->get()->pluck("color")->unique();
 
-            $sizes=Filter::where("base_filter_category","$category")->get();
+            foreach($getproductIds as $productId){
+               array_push($productIds,$productId->id);
+
+            }   
+
+            $productSizes=ProductsAttribute::whereIn("product_id",$productIds)->get()->pluck("size")->unique();
 
 
-        return view("frontend.specific_shop",compact("products","category","brands","colors","sizes"));
+        return view("frontend.specific_shop",compact("products","category","brands","colors","productSizes"));
         }
     }
 
@@ -108,6 +145,11 @@ class IndexController extends Controller
         
 
         return response($product);
+    }
+
+    public function sellerIntro(Request $request){
+
+        return view("frontend.seller_intro");
     }
 
 }

@@ -9,7 +9,7 @@
           <div class="col-12 col-md-3">
             <div class="product-item  bg-light">
                <div class="product-img  position-relative overflow-hidden">
-                   <img class="img-fluid w-100" src="{{asset("storage/shop_profiles/$vendor->shop_profile")}}" alt="">
+                   <img class="img-fluid w-100" src="{{asset("storage/shop_profiles/$vendor->shop_profile")}}" style="height:200px" alt="">
                    <div class="product-action">
                      
                        <a class="btn btn-outline-dark btn-square" href="{{route("vendordetail",$vendor->id)}}"><i class="fas fa-info"></i></a> 

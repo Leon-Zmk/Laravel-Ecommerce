@@ -45,35 +45,42 @@ Route::prefix("/admin")->group(function(){
         Route::get("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
         Route::post("/update-vendor-details/{detail_type}",[App\Http\Controllers\AdminControllers\AdminController::class,"updateVendorDetails"])->name("vupdate");
 
-        Route::get("/management/{type?}",[App\Http\Controllers\AdminControllers\AdminController::class,"admins"])->name("management");
-        Route::post("/management/status",[App\Http\Controllers\AdminControllers\AdminController::class,"status"])->name("manageStatus");
-        Route::get("/management/{id?}/detail",[App\Http\Controllers\AdminControllers\AdminController::class,"detail"])->name("managementDetail");
-
-        Route::get("/management/manage/users",[App\Http\Controllers\AdminControllers\AdminController::class,"users"])->name("users");
+       Route::prefix("accs")->middleware("isAdmin")->group(function(){
+            Route::get("/management/{type?}",[App\Http\Controllers\AdminControllers\AdminController::class,"admins"])->name("management");
+            Route::post("/management/status",[App\Http\Controllers\AdminControllers\AdminController::class,"status"])->name("manageStatus");
+            Route::get("/management/{id?}/detail",[App\Http\Controllers\AdminControllers\AdminController::class,"detail"])->name("managementDetail");
+            Route::get("/management/manage/users",[App\Http\Controllers\AdminControllers\AdminController::class,"users"])->name("users");
+       });
 
 
         //catalogue 
 
-        Route::get("/management/catalogue/sections",[App\Http\Controllers\AdminControllers\SectionController::class,"sections"])->name("sectionsManagement");
-        Route::post("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
-        Route::get("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
-        Route::post("management/catalogue/delete/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"delete"])->name("sectionDelete");
+        Route::prefix("sects")->middleware("isAdmin")->group(function(){
+            Route::get("/management/catalogue/sections",[App\Http\Controllers\AdminControllers\SectionController::class,"sections"])->name("sectionsManagement");
+            Route::post("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
+            Route::get("management/catalogue/add_update/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"addUpdateSections"])->name("ausections");
+            Route::post("management/catalogue/delete/sections/{id?}",[App\Http\Controllers\AdminControllers\SectionController::class,"delete"])->name("sectionDelete");
+        });
 
 
-        Route::get("/management/catalogue/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"Categories"])->name("categoriesManagement");
-        Route::get("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
-        Route::post("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
-        Route::get("management/catalogue/get-ajax-categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"getCategories"])->name("getCategories");
-        Route::post("management/catalogue/delete/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"delete"])->name("categoryDelete");
-        Route::get("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
-        Route::post("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
-        Route::post("/management/catalogue/delete-image/categories/",[App\Http\Controllers\AdminControllers\CategoryController::class,"deleteImage"])->name("deletecategoryImage");
+        Route::prefix("categs")->middleware("isAdmin")->group(function(){
+            Route::get("/management/catalogue/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"Categories"])->name("categoriesManagement");
+            Route::get("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
+            Route::post("management/catalogue/add/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"addCategories"])->name("addCategories");
+            Route::get("management/catalogue/get-ajax-categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"getCategories"])->name("getCategories");
+            Route::post("management/catalogue/delete/categories",[App\Http\Controllers\AdminControllers\CategoryController::class,"delete"])->name("categoryDelete");
+            Route::get("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
+            Route::post("/management/catalogue/update/categories/{id?}",[App\Http\Controllers\AdminControllers\CategoryController::class,"update"])->name("categoryUpdate");
+            Route::post("/management/catalogue/delete-image/categories/",[App\Http\Controllers\AdminControllers\CategoryController::class,"deleteImage"])->name("deletecategoryImage");
+        });
 
 
-        Route::get("/management/catalogue/brands",[App\Http\Controllers\AdminControllers\BrandController::class,"brands"])->name("brandsManagement");
-        Route::post("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
-        Route::get("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
-        Route::post("management/catalogue/delete/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"delete"])->name("brandDelete");
+        Route::prefix("brands")->middleware("isAdmin")->group(function(){
+            Route::get("/management/catalogue/brands",[App\Http\Controllers\AdminControllers\BrandController::class,"brands"])->name("brandsManagement");
+            Route::post("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
+            Route::get("management/catalogue/add_update/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"addUpdateBrands"])->name("auBrands");
+            Route::post("management/catalogue/delete/brands/{id?}",[App\Http\Controllers\AdminControllers\BrandController::class,"delete"])->name("brandDelete");
+        });
 
 
         Route::get("/management/catalogue/products",[App\Http\Controllers\AdminControllers\ProductController::class,"products"])->name("productsManagement");
@@ -103,8 +110,15 @@ Route::prefix("/admin")->group(function(){
         Route::get("/management/orders/buyers",[App\Http\Controllers\AdminControllers\AdminController::class,"Buyers"])->name("buyers");
 
 
+        Route::post("/management/orders/status",[App\Http\Controllers\AdminControllers\AdminController::class,"updateOrderStatus"])->name("orderstatus");
 
-        
+
+        Route::post("/management/orders/delete",[App\Http\Controllers\AdminControllers\AdminController::class,"deleteOrder"])->name("orderdelete");
+
+        Route::post("/management/buyers/status",[App\Http\Controllers\AdminControllers\AdminController::class,"updateBuyerStatus"])->name("buyerstatus");
+
+        Route::post("/management/buyers/delete",[App\Http\Controllers\AdminControllers\AdminController::class,"deleteBuyer"])->name("buyerdelete");
+
 
 
         // logout
@@ -149,6 +163,8 @@ Route::post("/gsq",[App\Http\Controllers\FrontendControllers\IndexController::cl
 
 Route::get("/vendors",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendors"])->name("vendors");
 Route::get("/vendor/detail/{id?}",[App\Http\Controllers\FrontendControllers\IndexController::class,"vendorDetail"])->name("vendordetail");
+
+Route::get("/seller",[App\Http\Controllers\FrontendControllers\IndexController::class,"sellerIntro"])->name("sellerintro");
 
 
 

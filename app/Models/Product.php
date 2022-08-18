@@ -26,7 +26,14 @@ class Product extends Model
         return $this->hasMany(ProductsImage::class);
     }
 
-    public function attributesSizes(){
+    // i Dont know Why I Wrote this method but anyway
+    
+    // public function attributesSizes(){
+    //     return $this->hasMany(ProductsAttribute::class)->select("size");
+    // }
+
+    // For Getting Dynamic Sizes Filter For Every Categories
+    public function uniqueattributesSizes(){
         return $this->hasMany(ProductsAttribute::class)->select("size");
     }
 

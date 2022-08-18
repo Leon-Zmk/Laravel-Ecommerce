@@ -230,7 +230,7 @@
 
                
                
-                <form method="POST" action="{{route("vupdate","business")}}" enctype="multipart/form-data">
+                <form method="POST" @if($vshop) action="{{route("vupdate","business")}}" @else action="{{route("registershop")}}" @endif  enctype="multipart/form-data">
                   @csrf
                   <div class="card-body">
                   
@@ -255,28 +255,28 @@
                     </div>
                     <div class="form-group">
                       <label for="shop_name">Shop Name</label>
-                      <input type="shop_name" name="shop_name" value='{{$vshop->shop_name }}'  class="form-control" id="shop_name"  placeholder="shop_name">
+                      <input type="shop_name" name="shop_name" @if($vshop) value='{{$vshop->shop_name }}' @else  @endif class="form-control" id="shop_name"  placeholder="shop_name">
                       @error('shop_name')
                           {{$message}}
                       @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_address">Address</label>
-                      <input type="shop_address" name="shop_address"  value='{{ $vshop->shop_address }}'   class="form-control" id="shop_address"  placeholder="shop_address">
+                      <input type="text" name="shop_address"  @if($vshop) value='{{$vshop->shop_address }}' @else  @endif   class="form-control" id="shop_address"  placeholder="shop_address">
                       @error('shop_address')
                       {{$message}}
                   @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_webiste">Website</label>
-                      <input type="shop_webiste" name="shop_webiste" value='{{ $vshop->shop_website }}'  class="form-control" id="shop_webiste"  placeholder="shop_website">
+                      <input type="shop_webiste" name="shop_webiste" @if($vshop) value='{{$vshop->shop_name }}' @else  @endif  class="form-control" id="shop_webiste"  placeholder="shop_website">
                       @error('shop_website')
                       {{$message}}
                   @enderror
                     </div>
                     <div class="form-group">
                       <label for="shop_mobile">Mobile</label>
-                      <input type="shop_mobile" name="shop_mobile" value='{{ $vshop->shop_mobile }}'  class="form-control" id="shop_mobile"  placeholder="shop_mobile">
+                      <input type="shop_mobile" name="shop_mobile" @if($vshop) value='{{$vshop->shop_mobile }}' @else  @endif  class="form-control" id="shop_mobile"  placeholder="shop_mobile">
                       @error('shop_mobile')
                       {{$message}}
                   @enderror
@@ -306,10 +306,20 @@
         
                   </div>
                   <!-- /.card-body -->
-  
+                  @if($vshop)
+
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Update</button>
                   </div>
+
+                  @else
+
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+
+                  @endif
+                
                 </form>
               </div>
             </div>

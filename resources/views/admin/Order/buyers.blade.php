@@ -73,39 +73,69 @@
                             <th>Shipping</th>
                             <th>Sub Total</th>
                             <th>Total Price</th>
+                            <th>is_delivered : &nbsp;</th>
                             <th>Region</th>
                             <th>City</th>
                             <th>Township</th>
                             <th>Address : &nbsp;</th>
-                            <th>is_delivered : &nbsp;</th>
                             <th>Control : &nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
                     
-                       @foreach ($oders as $order)
+                      
 
-                        @foreach($order->orders as $norder)
+                        @foreach($buyers as $buyer)
 
                         <tr>
-                            <th>{{$norder->getBuyers->id}}</th>
-                            <th>{{$norder->getBuyers->name}}</th>
-                            <th>{{$norder->getBuyers->phone}}</th>
-                            <th>{{$norder->getBuyers->email}}</th>
-                            <th>{{$norder->getBuyers->shipping_fee}}</th>
-                            <th>{{$norder->getBuyers->sub_total}}</th>
-                            <th>{{$norder->getBuyers->all_total}}</th>
-                            <th>{{$norder->getBuyers->Region}}</th>
-                            <th>{{$norder->getBuyers->City}}</th>
-                            <th>{{$norder->getBuyers->Township}}</th>
-                            <th>{{$norder->getBuyers->address}}</th>
-                            <td>@if($norder->getBuyers->is_delivered == 0) <span class=" text-danger text-bold">No</span> @else <span class="text-success text-bold">Yes</span>  @endif </td>
-                            <th>Control</th>
+                            <th>{{$buyer->id}}</th>
+                            <th>{{$buyer->name}}</th>
+                            <th>{{$buyer->phone}}</th>
+                            <th>{{$buyer->email}}</th>
+                            <th>{{$buyer->shipping_fee}}</th>
+                            <th>{{$buyer->sub_total}}</th>
+                            <th>{{$buyer->all_total}}</th>
+                            <td>
+
+                              {{-- @if($buyer->is_delivered == 0) <span class=" text-danger text-bold">No</span> @else <span class="text-success text-bold">Yes</span>  @endif  --}}
+
+                              @if ($buyer->is_delivered==0)
+                              <a  class="buyertoggleStatus" id="buyer-id-{{$buyer->id}}" href="javascript:void(0)" buyer_id="{{$buyer->id}}" >
+                                <i class="fas fa-toggle-off text-black" status="inactive"></i>
+                                <p id="status-text-{{$buyer->id}} " class="text-danger text-bold">Not Deliver</p>
+                              </a>
+                            @else 
+                            <a  class="buyertoggleStatus" id="buyer-id-{{$buyer->id}}" href="javascript:void(0)" buyer_id="{{$buyer->id}}">
+                                <i class="fas fa-toggle-on text-success" status="active"></i>
+                                <p id="status-text-{{$buyer->id}} " class="text-success text-bold">Delivered</p>
+                              </a>
+                              @endif
+
+
+
+                          </td>
+                            <th>{{$buyer->Region}}</th>
+                            <th>{{$buyer->City}}</th>
+                            <th>{{$buyer->Township}}</th>
+                            <th>{{$buyer->address}}</th>
+                           
+                            <th>
+                              <form action="{{route("buyerdelete")}}" method="POST">
+                                @csrf 
+
+                                <input type="text" hidden name="buyer_id" value="{{$buyer->id}}">
+
+                                <button onclick="return confirm('Are you sure to Delete')" class="btn btn-outline-danger">Delete Buyer</button>
+
+                              </form>
+                            </th>
                         </tr>
 
+
                         @endforeach
-                         
-                       @endforeach
+                        
+
+                      
                      
                    
                     </tbody>

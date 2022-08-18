@@ -145,6 +145,72 @@ $(document).ready(function(){
       
     })
 
+
+    
+    $(document).on("click",".ordertoggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let order_id=$(this).attr("order_id");
+      
+        $.ajax({
+            type:"post",
+            url:`/admin/management/orders/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "order_id":order_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#order-id-'+order_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i> <p class="text-danger text-bold">Not Deliver</p>');
+               
+
+               }else{
+                $('#order-id-'+order_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>  <p class="text-success text-bold">Delivered</p>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+
+    $(document).on("click",".buyertoggleStatus",function(){
+        
+
+        let status=$(this).children("i").attr("status");
+        let buyer_id=$(this).attr("buyer_id");
+      
+        $.ajax({
+            type:"post",
+            url:`/admin/management/buyers/status`,
+            data:{
+                "_token":$('meta[name="csrf_token"]').attr('content'),
+                "status":status,
+                "buyer_id":buyer_id,
+                
+            },
+            success:function(resp){
+               if(resp==0){
+                $('#buyer-id-'+buyer_id).html('<i class="fas fa-toggle-off text-black" status="inactive"></i> <p class="text-danger text-bold">Not Deliver</p>');
+               
+
+               }else{
+                $('#buyer-id-'+buyer_id).html('<i class="fas fa-toggle-on text-success" status="active"></i>  <p class="text-success text-bold">Delivered</p>');
+
+               }
+            },
+            error:function(){
+                console.log("error");
+            }
+        })
+      
+    })
+
     $("#section_id").on("change",function(){
         let section_id=$(this).val();
         $.ajax({

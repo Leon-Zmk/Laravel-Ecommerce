@@ -82,13 +82,13 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium" >Shipping</h6>
-                        <h6 class="font-weight-medium" id="shipping">  @if(!empty($orders)) {{$order->getProduct->shipping_fee}} @else 0  @endif</h6>
+                        <h6 class="font-weight-medium" id="shipping">  @if(!empty($order)) {{$order->getProduct->shipping_fee}} @else 0  @endif</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5 id="alltotal">@if(!empty($orders)) {{App\Models\Order::getPrice()+ $order->getProduct->shipping_fee}} @else @endif</h5>
+                        <h5 id="alltotal">@if(!empty($order)) {{App\Models\Order::getPrice()+ $order->getProduct->shipping_fee}} @else @endif</h5>
 
 
 
@@ -112,9 +112,11 @@
         <div class="modal-body">
             <form action="{{route("purchase")}}" id="orderform" method="post">
                 @csrf
-                <input type="text" hidden name="shipping_fee" value=@if(!empty($orders)){{$order->getProduct->shipping_fee}} @else @endif> 
-                <input type="text" hidden class="itemtotal"  name="sub_total" value="{{App\Models\Order::getPrice()}}"> 
-                <input type="text" hidden class="alltotal"  name="all_total" value=@if(!empty($orders)){{ App\Models\Order::getPrice()+ $order->getProduct->shipping_fee }} @else @endif> 
+                <input type="text" hidden  name="shipping_fee" value=@if(!empty($order)){{$order->getProduct->shipping_fee}} @else @endif> 
+                <input type="text" hidden  class="itemtotal"  name="sub_total" value="{{App\Models\Order::getPrice()}}"> 
+                <input type="text" hidden  class="alltotal"  name="all_total" value=@if(!empty($order)){{ App\Models\Order::getPrice()+ $order->getProduct->shipping_fee }} @else @endif> 
+                <input type="text" hidden  class="owner_id"  name="owner_id" value=@if(!empty($order)){{  $order->getProduct->admin_id }} @else @endif> 
+
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Name</label>
                   <input type="text" name="name" class="form-control" id="recipient-name">
